@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snaggle</title>
+    <link rel="stylesheet" href="css/popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Snaggle</h1>
+      </header>
+      <main id="content">
+        <div id="loading" hidden>Detecting site...</div>
+        <div id="chat-exporter" class="feature-section" hidden>
+          <h2>Chat Exporter</h2>
+          <p>Download current chat thread:</p>
+          <div class="button-group">
+            <button id="chat-txt" title="Download as Plain Text">.txt</button>
+            <button id="chat-md" title="Download as Markdown">.md</button>
+            <button id="chat-json" title="Download as JSON">.json</button>
+          </div>
+        </div>
+        <div id="github-downloader" class="feature-section" hidden>
+          <h2>GitHub Downloader</h2>
+          <p>Select files/folders from current directory:</p>
+          <div id="github-file-tree" class="file-tree">
+            <div class="loading-tree">Loading file tree...</div>
+          </div>
+          <p style="margin-top: 10px; margin-bottom: 5px">
+            <label>
+              <input type="checkbox" id="github-select-all" /> Select All
+              Visible
+            </label>
+          </p>
+          <button id="github-download-zip" class="download-button" disabled>
+            Download Selected (.zip)
+          </button>
+        </div>
+        <div id="general-exporter" class="feature-section" hidden>
+          <h2>General Page Exporter</h2>
+          <p>Download current page content:</p>
+          <div class="button-group">
+            <button id="general-pdf" title="Save as PDF (uses Print Dialog)">
+              PDF
+            </button>
+            <button id="general-md" title="Download as Markdown">.md</button>
+            <button id="general-txt" title="Download as Plain Text">
+              .txt
+            </button>
+          </div>
+        </div>
+        <div id="unsupported-site" class="feature-section" hidden>
+          <h2>Unsupported</h2>
+          <p>
+            Snaggle feature not available for this specific page or protocol.
+          </p>
+        </div>
+        <div id="error-section" class="feature-section" hidden>
+          <h2>Error</h2>
+          <p id="error-message"></p>
+          <button onclick="window.close()">Close</button>
+        </div>
+      </main>
+    </div>
+    <script src="dist/js/vendor/turndown.js"></script>
+    <script src="dist/js/popup.js" type="module"></script>
+  </body>
+</html>

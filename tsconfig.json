@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+      /* Base Options: */
+      "esModuleInterop": true, // Enables compatibility with CommonJS modules
+      "skipLibCheck": true, // Skip type checking of declaration files
+      "target": "ES2017", // Target modern browsers, supporting async/await etc.
+      "allowJs": false, // Don't allow JavaScript files to be compiled (we're converting all)
+      "resolveJsonModule": true, // Allows importing JSON files (like manifest if needed, though usually not)
+      "moduleResolution": "node", // How modules get resolved (standard for Node/npm)
+      "module": "ES2020", // Use modern module format (supports dynamic import)
+
+      /* Strict Type Checking: */
+      "strict": true, // Enable all strict type-checking options
+      "noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
+      "strictNullChecks": true, // Enable strict null checks
+
+      /* Module/Output Options: */
+      "outDir": "./dist/js", // Output directory for compiled JS
+      "rootDir": "./js", // Root directory of source TS files
+      "sourceMap": true, // Generate source map files for debugging
+
+      /* Library Options: */
+      "lib": ["ES2020", "DOM", "DOM.Iterable"], // Include necessary built-in type definitions
+      // Add "WebWorker" if background script gives specific worker errors
+      // "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
+
+      /* Advanced: */
+      "forceConsistentCasingInFileNames": true // Disallow inconsistently-cased references to the same file
+    },
+    "include": [
+      "js/**/*.ts" // Include all .ts files within the js directory
+    ],
+    "exclude": [
+      "node_modules", // Exclude node_modules
+      "dist" // Exclude the output directory
+    ]
+  }
