@@ -3,14 +3,12 @@
     "version": "1.0.0",
     "description": "Download content from specific websites via the extension popup.",
     "private": true,
-    "scripts": 
-    {
+    "scripts": {
         "copy-vendor": "mkdir -p dist/js/vendor && cp js/vendor/*.js dist/js/vendor/",
         "build": "rm -rf dist && tsc && npm run copy-vendor",
         "watch": "tsc --watch"
     },
-    "keywords": 
-    [
+    "keywords": [
         "chrome",
         "extension",
         "downloader",
@@ -18,10 +16,8 @@
         "typescript"
     ],
     "author": "Kaden Gruizenga",
-    "devDependencies": 
-    {
+    "devDependencies": {
         "@types/chrome": "^0.0.268",
-        "@types/jszip": "^3.4.1",
         "@types/turndown": "^5.0.4",
         "jszip": "^3.10.1",
         "turndown": "^7.1.3",

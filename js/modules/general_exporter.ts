@@ -1,7 +1,6 @@
-import TurndownService from 'turndown'; // Import type
-
-// Ensure TurndownService is loaded globally via script tag in popup.html
-declare var TurndownService: typeof import('turndown');
+// Declare TurndownService as loaded globally via script tag in popup.html
+// Using 'any' for simplicity if precise types from @types/turndown cause issues
+declare var TurndownService: any;
 
 // Interface for return type
 interface PageExtractionResult {
@@ -10,52 +9,55 @@ interface PageExtractionResult {
     requiresMarkdownConversion?: boolean;
 }
 
-// Typed parameter
 export function isGeneralSite(url: string): boolean {
      try {
         const protocol = new URL(url).protocol;
         return protocol === 'http:' || protocol === 'https:' || protocol === 'file:';
-    } catch (e) {
-        return false; // Invalid URL
-    }
+    } catch (e) { return false; }
 }
 
 // Function executed IN THE CONTEXT OF THE WEBPAGE
-// Add type for parameter and return value
 export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
     try {
         let content: string = "";
         let requiresMarkdownConversion: boolean = false;
 
         if (format === 'txt') {
-            // Use optional chaining and nullish coalescing
             content = (document.body?.innerText ?? document.documentElement?.innerText ?? "").trim();
         } else if (format === 'md') {
-            // Type the source element
             const contentNodeSource: Element | null =
                 document.querySelector('main') ||
                 document.querySelector('article') ||
                 document.querySelector('[role="main"]') ||
-                document.body; // Fallback to body
+                document.body;
 
             if (contentNodeSource) {
-                 // Type the cloned node
                  const contentNode: Node = contentNodeSource.cloneNode(true);
+                 const selectorsToRemove: string[] = [
+                     'script', 'style', 'link', 'meta', 'noscript', 'svg', 'iframe',
+                     'header', 'footer', 'nav', 'aside', '[role="banner"]',
+                     '[role="contentinfo"]', '[role="navigation"]', '[role="complementary"]',
+                     'button', 'input', 'select', 'textarea', '.advertisement', '.ad',
+                     '#ad', '[class*="banner"]', '.popup', '.modal', '#cookie-notice',
+                     '.cookie-consent'
+                 ];
 
-                 // Basic Cleaning (Type querySelectorAll elements)
-                 const selectorsToRemove: string[] = [ /* ... same selectors ... */ ];
-                 contentNode.querySelectorAll<Element>(selectorsToRemove.join(', ')).forEach(el => el.remove());
-
-                 // Need to assert type to HTMLElement to access innerHTML
-                 if (contentNode instanceof HTMLElement) {
-                     content = contentNode.innerHTML.trim();
+                 // Check if contentNode is an Element before calling DOM methods
+                 if (contentNode instanceof Element) {
+                    contentNode.querySelectorAll<Element>(selectorsToRemove.join(', '))
+                               .forEach((el: Element) => el.remove()); // Type 'el'
+                    content = contentNode.innerHTML.trim(); // Access innerHTML safely
+                    requiresMarkdownConversion = true;
+                 } else if (contentNode instanceof HTMLElement) { // Fallback for other node types?
+                     console.warn("Snaggle: Content node was not an Element, using textContent.");
+                     content = contentNode.textContent?.trim() ?? "";
+                     requiresMarkdownConversion = false; // Probably don't convert textContent
                  } else {
-                      // Fallback for non-element nodes? Unlikely for body/main/article
-                      console.warn("Snaggle: Content node was not an HTMLElement, cannot get innerHTML.");
-                      content = contentNode.textContent?.trim() ?? ""; // Use textContent as fallback
+                     console.warn("Snaggle: Cloned content node was not an Element or HTMLElement.");
+                     content = ""; // Default to empty
                  }
-                 requiresMarkdownConversion = true;
             } else {
+                // This should theoretically not happen if document.body exists
                 throw new Error("Could not identify page content (body not found?).");
             }
         } else {
@@ -76,31 +78,21 @@ export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
 
 
 // This function runs in popup.js AFTER getting HTML content from extractPageData
-// Add types for parameter and return value
 export function convertHtmlToMarkdown(htmlContent: string): string {
-    // Check if Turndown library is loaded (should be included in popup.html)
     if (typeof TurndownService === 'undefined') {
         console.error("Snaggle: Turndown library is not loaded.");
         return "```html\n<!-- Turndown library was not available -->\n" + htmlContent + "\n```";
     }
-
     try {
-         // Initialize Turndown Service with options
-         // Use the TurndownService type for constructor options
-         const turndownService = new TurndownService({
-             headingStyle: 'atx',
-             hr: '---',
-             bulletListMarker: '*',
-             codeBlockStyle: 'fenced',
-             emDelimiter: '_',
-             strongDelimiter: '**',
+         // Type options explicitly if possible, or use 'any' if types conflict
+         const turndownOptions: any = { // Using any for simplicity here
+             headingStyle: 'atx', hr: '---', bulletListMarker: '*',
+             codeBlockStyle: 'fenced', emDelimiter: '_', strongDelimiter: '**',
              linkStyle: 'inlined'
-             // Add more options from TurndownService.Options if needed
-         } as TurndownService.Options); // Cast options if needed or ensure interface matches
-
+         };
+         const turndownService = new TurndownService(turndownOptions);
          const markdown: string = turndownService.turndown(htmlContent);
          return markdown;
-
     } catch (error: any) {
          console.error("Snaggle: Turndown HTML to Markdown conversion failed:", error);
          return `## Markdown Conversion Failed\n\nError: ${error?.message ?? 'Unknown error'}\n\n### Raw HTML:\n\n` + "```html\n" + htmlContent + "\n```";
