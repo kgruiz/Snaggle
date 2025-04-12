@@ -1,6 +1,5 @@
 // Declare TurndownService as loaded globally via script tag in popup.html
-// Using 'any' for simplicity if precise types from @types/turndown cause issues
-declare var TurndownService: any;
+declare var TurndownService: any; // Using 'any' type for simplicity
 
 // Interface for return type
 interface PageExtractionResult {
@@ -18,21 +17,37 @@ export function isGeneralSite(url: string): boolean {
 
 // Function executed IN THE CONTEXT OF THE WEBPAGE
 export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
+    // --- Log entry into the content script function ---
+    console.log(`Snaggle Content Script: extractPageData called with format: ${format}`);
     try {
         let content: string = "";
         let requiresMarkdownConversion: boolean = false;
 
+        if (!document.body) {
+            console.error("Snaggle Content Script: document.body is null or undefined!");
+            throw new Error("Document body not found.");
+        }
+
         if (format === 'txt') {
-            content = (document.body?.innerText ?? document.documentElement?.innerText ?? "").trim();
+            console.log("Snaggle Content Script: Extracting as TXT using body.innerText");
+            content = (document.body.innerText ?? document.documentElement?.innerText ?? "").trim();
+             if (!content) {
+                 console.warn("Snaggle Content Script: TXT extraction resulted in empty content.");
+             }
         } else if (format === 'md') {
+             console.log("Snaggle Content Script: Extracting as MD, searching for main content node...");
+            // Type the source element
             const contentNodeSource: Element | null =
                 document.querySelector('main') ||
                 document.querySelector('article') ||
                 document.querySelector('[role="main"]') ||
-                document.body;
+                document.body; // Fallback to body
 
             if (contentNodeSource) {
+                 console.log(`Snaggle Content Script: Found content node source: ${contentNodeSource.tagName}${contentNodeSource.id ? '#'+contentNodeSource.id : ''}`);
                  const contentNode: Node = contentNodeSource.cloneNode(true);
+                 console.log("Snaggle Content Script: Cloned content node.");
+
                  const selectorsToRemove: string[] = [
                      'script', 'style', 'link', 'meta', 'noscript', 'svg', 'iframe',
                      'header', 'footer', 'nav', 'aside', '[role="banner"]',
@@ -42,36 +57,48 @@ export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
                      '.cookie-consent'
                  ];
 
-                 // Check if contentNode is an Element before calling DOM methods
+                 // Ensure contentNode is an Element before calling querySelectorAll
                  if (contentNode instanceof Element) {
+                    console.log("Snaggle Content Script: Cleaning cloned Element node...");
+                    let removedCount = 0;
                     contentNode.querySelectorAll<Element>(selectorsToRemove.join(', '))
-                               .forEach((el: Element) => el.remove()); // Type 'el'
-                    content = contentNode.innerHTML.trim(); // Access innerHTML safely
+                               .forEach((el: Element) => {
+                                   el.remove();
+                                   removedCount++;
+                                });
+                    console.log(`Snaggle Content Script: Removed ${removedCount} elements during cleaning.`);
+                    content = contentNode.innerHTML.trim();
                     requiresMarkdownConversion = true;
-                 } else if (contentNode instanceof HTMLElement) { // Fallback for other node types?
-                     console.warn("Snaggle: Content node was not an Element, using textContent.");
-                     content = contentNode.textContent?.trim() ?? "";
-                     requiresMarkdownConversion = false; // Probably don't convert textContent
+                    console.log(`Snaggle Content Script: Extracted HTML content length: ${content.length}`);
+
                  } else {
-                     console.warn("Snaggle: Cloned content node was not an Element or HTMLElement.");
-                     content = ""; // Default to empty
+                     // This case should be rare if we start from body/main/article
+                     console.warn("Snaggle Content Script: Cloned content node was not an Element. Attempting textContent.");
+                     content = contentNode.textContent?.trim() ?? "";
+                     requiresMarkdownConversion = false;
+                     console.log(`Snaggle Content Script: Extracted textContent length: ${content.length}`);
                  }
+
             } else {
-                // This should theoretically not happen if document.body exists
-                throw new Error("Could not identify page content (body not found?).");
+                // Should not happen as document.body should exist
+                console.error("Snaggle Content Script: Could not identify any content node source (main, article, body).");
+                throw new Error("Could not identify page content (body/main/article not found?).");
             }
         } else {
              // This case should technically not be reachable if called correctly
+             console.warn(`Snaggle Content Script: Received unexpected format: ${format}`);
              return { content: "", error: `Unsupported format requested: ${format}` };
         }
 
+        console.log("Snaggle Content Script: Extraction successful.");
         return {
             content: content,
             requiresMarkdownConversion: requiresMarkdownConversion
         };
 
     } catch (error: any) {
-        console.error("Snaggle General Extraction Error:", error);
+        // --- Log the specific error occurring inside the content script ---
+        console.error("Snaggle Content Script: Error during extraction:", error);
         return { content: "", error: `Failed to extract page data: ${error?.message ?? 'Unknown error'}` };
     }
 }
@@ -79,13 +106,13 @@ export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
 
 // This function runs in popup.js AFTER getting HTML content from extractPageData
 export function convertHtmlToMarkdown(htmlContent: string): string {
+    // No changes needed here, but keep for completeness
     if (typeof TurndownService === 'undefined') {
         console.error("Snaggle: Turndown library is not loaded.");
         return "```html\n<!-- Turndown library was not available -->\n" + htmlContent + "\n```";
     }
     try {
-         // Type options explicitly if possible, or use 'any' if types conflict
-         const turndownOptions: any = { // Using any for simplicity here
+         const turndownOptions: any = {
              headingStyle: 'atx', hr: '---', bulletListMarker: '*',
              codeBlockStyle: 'fenced', emDelimiter: '_', strongDelimiter: '**',
              linkStyle: 'inlined'

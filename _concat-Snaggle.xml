@@ -1,0 +1,1549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<concatSnaggle>
+  <title>
+    <text>Contents of 'Snaggle'</text>
+  </title>
+  <parameters>
+    <command>concat -e node_modules/\*,package\*,vendor/\* -x -v -d</command>
+    <extensions>
+      <value>All</value>
+    </extensions>
+    <excludePatterns>
+      <value>node_modules/*</value>
+      <value>package*</value>
+      <value>vendor/*</value>
+    </excludePatterns>
+    <includePatterns>
+      <value>All</value>
+    </includePatterns>
+    <caseSensitive>false</caseSensitive>
+    <totalMatchedFiles>16</totalMatchedFiles>
+  </parameters>
+  <matchedDirList>
+    <dirEntry>"Snaggle": ["popup.html", "tsconfig.json", "vite.config.ts"]</dirEntry>
+    <dirEntry>"Snaggle/dist": ["manifest.json", "popup.html", "service-worker-loader.js"]</dirEntry>
+    <dirEntry>"Snaggle/dist/assets": ["index.ts-C5yHeIjT.js", "popup-BTO7rJnB.css",
+      "popup-CqSU343t.js"]</dirEntry>
+    <dirEntry>"Snaggle/docs": ["README.md"]</dirEntry>
+    <dirEntry>"Snaggle/src/background": ["index.ts"]</dirEntry>
+    <dirEntry>"Snaggle/src/modules": ["chat_exporter.ts", "general_exporter.ts",
+      "github_downloader.ts"]</dirEntry>
+    <dirEntry>"Snaggle/src/popup": ["index.ts", "popup.css"]</dirEntry>
+  </matchedDirList>
+  <treeOutput>
+    <treeRepresentation>
+      <dir>"Snaggle"</dir>
+      <tree><![CDATA[
+<tree>
+  <directory name=".">
+    <directory name="dist">
+      <directory name="assets">
+        <file name="index.ts-C5yHeIjT.js"></file>
+        <file name="popup-BTO7rJnB.css"></file>
+        <file name="popup-CqSU343t.js"></file>
+      </directory>
+      <directory name="icons">
+        <file name="icon_128.png"></file>
+        <file name="icon_16.png"></file>
+        <file name="icon_48.png"></file>
+      </directory>
+      <file name="manifest.json"></file>
+      <file name="popup.html"></file>
+      <file name="service-worker-loader.js"></file>
+      <directory name="vendor">
+        <file name="jszip.min.js"></file>
+        <file name="turndown.js"></file>
+      </directory>
+    </directory>
+    <directory name="docs">
+      <file name="README.md"></file>
+    </directory>
+    <file name="package-lock.json"></file>
+    <file name="package.json"></file>
+    <file name="popup.html"></file>
+    <directory name="public">
+      <directory name="icons">
+        <file name="icon_128.png"></file>
+        <file name="icon_16.png"></file>
+        <file name="icon_48.png"></file>
+      </directory>
+      <directory name="vendor">
+        <file name="jszip.min.js"></file>
+        <file name="turndown.js"></file>
+      </directory>
+    </directory>
+    <directory name="src">
+      <directory name="background">
+        <file name="index.ts"></file>
+      </directory>
+      <directory name="modules">
+        <file name="chat_exporter.ts"></file>
+        <file name="general_exporter.ts"></file>
+        <file name="github_downloader.ts"></file>
+      </directory>
+      <directory name="popup">
+        <file name="index.ts"></file>
+        <file name="popup.css"></file>
+      </directory>
+    </directory>
+    <file name="tsconfig.json"></file>
+    <file name="vite.config.ts"></file>
+  </directory>
+  <report>
+    <directories>13</directories>
+    <files>28</files>
+  </report>
+</tree>
+]]></tree>
+    </treeRepresentation>
+    <dirList>
+      <dirEntry>"Snaggle/"."": ["dist, docs, package.json, package-lock.json, popup.html, public,
+        src, tsconfig.json, vite.config.ts"]</dirEntry>
+      <dirEntry>"Snaggle/"./dist"": ["assets, icons, manifest.json, popup.html,
+        service-worker-loader.js, vendor"]</dirEntry>
+      <dirEntry>"Snaggle/"./dist/assets"": ["index.ts-C5yHeIjT.js, popup-BTO7rJnB.css,
+        popup-CqSU343t.js"]</dirEntry>
+      <dirEntry>"Snaggle/"./dist/icons"": ["icon_16.png, icon_48.png, icon_128.png"]</dirEntry>
+      <dirEntry>"Snaggle/"./dist/vendor"": ["jszip.min.js, turndown.js"]</dirEntry>
+      <dirEntry>"Snaggle/"./docs"": ["README.md"]</dirEntry>
+      <dirEntry>"Snaggle/"./public"": ["icons, vendor"]</dirEntry>
+      <dirEntry>"Snaggle/"./public/icons"": ["icon_16.png, icon_48.png, icon_128.png"]</dirEntry>
+      <dirEntry>"Snaggle/"./public/vendor"": ["jszip.min.js, turndown.js"]</dirEntry>
+      <dirEntry>"Snaggle/"./src"": ["background, modules, popup"]</dirEntry>
+      <dirEntry>"Snaggle/"./src/background"": ["index.ts"]</dirEntry>
+      <dirEntry>"Snaggle/"./src/modules"": ["chat_exporter.ts, general_exporter.ts,
+        github_downloader.ts"]</dirEntry>
+      <dirEntry>"Snaggle/"./src/popup"": ["index.ts, popup.css"]</dirEntry>
+    </dirList>
+  </treeOutput>
+  <fileContents>
+    <file>
+      <filename>index.ts-C5yHeIjT.js</filename>
+      <relPath>"Snaggle/dist/assets/index.ts-C5yHeIjT.js"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/dist/assets/index.ts-C5yHeIjT.js"</absPath>
+      <content><![CDATA[
+const s=chrome;let a=!1,c=null;async function w(){return a||typeof JSZip<"u"?(a||(console.log("Snaggle: JSZip already defined."),a=!0),Promise.resolve()):c||(console.log("Snaggle: Initiating JSZip dynamic load..."),c=(async()=>{try{const t=await fetch("/vendor/jszip.min.js");if(!t.ok)throw new Error(`Failed to fetch JSZip (${t.status}): ${t.statusText}`);const r=await t.text();if(new Function(r)(),typeof JSZip>"u")throw new Error("JSZip script executed but global not defined.");a=!0,console.log("Snaggle: JSZip loaded dynamically.")}catch(o){throw console.error("Snaggle: Failed to load/execute JSZip:",o),a=!1,o}finally{c=null}})(),c)}s.runtime.onMessage.addListener((o,t,r)=>{if(console.log("Snaggle Background received message:",o),o.action==="downloadFile")return!o.url||!o.filename?(console.error("Snaggle: Missing URL/filename for downloadFile."),r({success:!1,error:"Missing URL or filename."}),!1):(s.downloads.download({url:o.url,filename:o.filename,saveAs:!1}).then(e=>{e!==void 0&&e!==0?(console.log(`Snaggle: Download started with ID: ${e}`),r({success:!0,downloadId:e})):(console.error(`Snaggle: Download initiation returned invalid ID (${e}). URL: ${o.url}`),r({success:!1,error:"Download could not be initiated (invalid ID)."}))}).catch(e=>{console.error(`Snaggle: Download promise failed: ${e.message}`),r({success:!1,error:e.message})}),!0);if(o.action==="createAndDownloadZip")return w().then(()=>{if(!a||typeof JSZip>"u"){console.error("Snaggle: JSZip could not be loaded for ZIP."),r({success:!1,error:"JSZip library could not be loaded."});return}if(!o.filesToFetch||!o.repoInfo){console.error("Snaggle: Missing files/repoInfo for ZIP."),r({success:!1,error:"Missing filesToFetch or repoInfo."});return}let e=null;y(o.filesToFetch,o.repoInfo,o.filename||"github-download.zip").then(n=>(e=URL.createObjectURL(n),s.downloads.download({url:e,filename:o.filename||"github-download.zip",saveAs:!1}))).then(n=>{n!==void 0&&n!==0?(console.log(`Snaggle: ZIP Download started with ID: ${n}`),r({success:!0,downloadId:n})):(console.error(`Snaggle: ZIP Download initiation returned invalid ID (${n}).`),r({success:!1,error:"ZIP Download could not be initiated (invalid ID)."}))}).catch(n=>{console.error(`Snaggle: ZIP Creation/Download promise failed: ${n.message}`),r({success:!1,error:n.message})}).finally(()=>{e&&(console.log("Snaggle: Revoking ZIP blob URL in finally block."),setTimeout(()=>{e&&URL.revokeObjectURL(e)},6e4),e=null)})}).catch(e=>{console.error("Snaggle: Error during JSZip loading sequence:",e),r({success:!1,error:`Failed to prepare ZIP library: ${(e==null?void 0:e.message)??"Unknown load error"}`})}),!0});async function y(o,t,r){if(typeof JSZip>"u")throw new Error("JSZip is not available when trying to create ZIP.");const e=new JSZip,{owner:n,repo:u,ref:d}=t;console.log("Snaggle: Fetching files for ZIP:",o);const p=o.map(async i=>{if(i.type==="file"){const h=`https://api.github.com/repos/${n}/${u}/contents/${i.path}?ref=${d}`;try{const l=await fetch(h,{headers:{Accept:"application/vnd.github.v3.raw"}});if(!l.ok){let f=`GitHub API error: ${l.status} ${l.statusText}`;try{const g=await l.text();f+=` Body: ${g.substring(0,100)}`}catch{}throw new Error(`${f} for ${i.path}.`)}const S=await l.blob();e.file(i.path,S,{binary:!0})}catch(l){console.error(`Snaggle: Failed to fetch file ${i.path}:`,l),e.file(i.path+".error.txt",`Failed to fetch '${i.path}':
+${l.message}`)}}else i.type==="dir"&&(console.warn(`Snaggle: Directory selection (${i.path}) - recursive download not implemented. Creating folder marker.`),e.folder(i.path))});return await Promise.all(p),console.log("Snaggle: Generating ZIP file..."),e.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:6}})}console.log("Snaggle Background Service Worker Loaded (TypeScript/Vite - Module).");
+]]></content>
+    </file>
+    <file>
+      <filename>popup-BTO7rJnB.css</filename>
+      <relPath>"Snaggle/dist/assets/popup-BTO7rJnB.css"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/dist/assets/popup-BTO7rJnB.css"</absPath>
+      <content><![CDATA[
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}html,body{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol;font-size:14px;line-height:1.5;background-color:#282c34;color:#abb2bf;min-width:340px;max-width:480px;overflow:hidden}.container{background-color:#282c34;padding:18px 20px;max-height:550px;overflow-y:auto;overflow-x:hidden;border-radius:0}header{text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #3a3f4a}header h1{font-size:1.6em;font-weight:600;color:#e6e6e6;letter-spacing:.5px}#loading{padding:40px 15px;text-align:center;font-size:1.1em;color:#888e99;font-style:italic}.feature-section{margin-bottom:25px}.feature-section h2{font-size:1.2em;font-weight:500;color:#61afef;margin-bottom:12px;padding-bottom:5px;border-bottom:1px solid #3a3f4a}.feature-section p{margin-bottom:15px;color:#abb2bf;font-size:.95em}.button-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}button{display:inline-block;padding:8px 15px;font-size:.95em;font-weight:500;text-align:center;border:1px solid #4b5263;border-radius:5px;background-color:#3a3f4a;color:#dcdfe4;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,transform .1s ease;min-width:70px}button:hover:not(:disabled){background-color:#4b5263;border-color:#61afef;color:#fff}button:active:not(:disabled){transform:scale(.98);background-color:#434a58}button:disabled{cursor:not-allowed;opacity:.5;transform:none}.download-button{display:block;width:100%;margin-top:20px;padding:10px 15px;background-color:#61afef;border-color:#61afef;color:#282c34;font-weight:600}.download-button:hover:not(:disabled){background-color:#7ac0ff;border-color:#7ac0ff;color:#282c34}.download-button:disabled{background-color:#3a3f4a;border-color:#4b5263;color:#888e99}.file-tree{max-height:220px;overflow-y:auto;border:1px solid #3a3f4a;border-radius:4px;padding:10px 12px;margin-bottom:15px;background-color:#21252b;font-size:.95em;position:relative;min-height:50px}.file-tree ul{list-style:none;padding-left:0;margin:0}.file-tree li{margin-bottom:4px}.file-tree label{display:flex;align-items:center;cursor:pointer;-webkit-user-select:none;user-select:none;padding:3px 5px;border-radius:3px;transition:background-color .15s ease}.file-tree label:hover{background-color:#ffffff0d}.file-tree input[type=checkbox]{margin-right:10px;cursor:pointer;flex-shrink:0}.file-tree span{word-break:break-all;color:#c8ccd4}.file-tree li:before{font-family:system-ui;display:inline-block;width:1.5em;text-align:center;margin-right:5px;color:#61afef}.file-tree li.folder:before{content:"📁"}.file-tree li.file:before{content:"📄"}.file-tree li.symlink:before{content:"🔗";opacity:.7}.file-tree li.submodule:before{content:"📦";opacity:.7}.file-tree .loading-tree,.file-tree .error-message{padding:15px;text-align:center;color:#888e99;font-style:italic}.file-tree .error-message{color:#e06c75;font-style:normal;font-weight:500}#error-section{padding:15px;background-color:#e06c751a;border:1px solid #e06c75;border-radius:5px;margin-top:15px}#error-section h2{border-bottom:none;margin-bottom:8px;color:#e06c75;font-size:1.1em;text-align:center}#error-section p{text-align:center;padding:0;margin-bottom:15px;color:#e48b93;white-space:pre-wrap;font-size:.9em}#error-section button{display:block;margin:10px auto 0}#unsupported-site{padding:25px 15px;text-align:center;font-style:italic;color:#888e99}#unsupported-site h2{border-bottom:none;margin-bottom:8px;color:#abb2bf}.container::-webkit-scrollbar,.file-tree::-webkit-scrollbar{width:8px}.container::-webkit-scrollbar-track,.file-tree::-webkit-scrollbar-track{background:#0000001a;border-radius:4px}.container::-webkit-scrollbar-thumb,.file-tree::-webkit-scrollbar-thumb{background-color:#fff3;border-radius:4px;border:1px solid rgba(0,0,0,.1)}.container::-webkit-scrollbar-thumb:hover,.file-tree::-webkit-scrollbar-thumb:hover{background-color:#ffffff4d}
+]]></content>
+    </file>
+    <file>
+      <filename>popup-CqSU343t.js</filename>
+      <relPath>"Snaggle/dist/assets/popup-CqSU343t.js"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/dist/assets/popup-CqSU343t.js"</absPath>
+      <content><![CDATA[
+(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))i(o);new MutationObserver(o=>{for(const r of o)if(r.type==="childList")for(const s of r.addedNodes)s.tagName==="LINK"&&s.rel==="modulepreload"&&i(s)}).observe(document,{childList:!0,subtree:!0});function n(o){const r={};return o.integrity&&(r.integrity=o.integrity),o.referrerPolicy&&(r.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?r.credentials="include":o.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(o){if(o.ep)return;o.ep=!0;const r=n(o);fetch(o.href,r)}})();function _(t){const e=["chat.openai.com","gemini.google.com","aistudio.google.com"];try{const n=new URL(t).hostname;return e.some(i=>n===i)}catch{return!1}}function z(t){const e={"chat.openai.com":{container:"main",messageTurn:'div[data-testid^="conversation-turn-"]',messageContent:".markdown",roleSelector:"div[data-message-author-role]",roleAttribute:"data-message-author-role",timestampSelector:"time[datetime]",timestampAttribute:"datetime"},"gemini.google.com":{container:"main",messageTurn:".message",messageContent:".content .text",roleIndicator:".participant .name"},"aistudio.google.com":{container:"div.chat-container",messageTurn:"div.message-row",messageContent:"div.message-text",roleIndicator:"div.sender-role"}};let n="",i="chat-export";const o=window.location.hostname,r=e[o];let s=!1;if(!r)return{content:"",filename:"error.txt",error:`No selectors defined for ${o}. Needs configuration.`};try{const a=r.container?document.querySelector(r.container):document.body;if(!a)throw new Error(`Chat container ('${r.container||"body"}') not found.`);const d=a.querySelectorAll(r.messageTurn);if(!d||d.length===0)throw new Error(`No chat turns found using selector: "${r.messageTurn}". Site structure may have changed.`);console.log(`Snaggle: Found ${d.length} chat turns/messages using "${r.messageTurn}".`);const g=[];d.forEach((u,T)=>{var q;let p="unknown",f="",w=null,R=r.roleSelector?u.querySelector(r.roleSelector):null;if(R&&r.roleAttribute)p=R.getAttribute(r.roleAttribute)||"unknown";else if(r.roleIndicator){const E=u.querySelector(r.roleIndicator);E&&(p=((q=E.textContent)==null?void 0:q.trim().toLowerCase())||"unknown")}if(p=p.replace(/^model$/i,"assistant"),r.timestampSelector){const E=u.querySelector(r.timestampSelector);E&&(w=r.timestampAttribute?E.getAttribute(r.timestampAttribute):E.textContent,w=w?w.trim():null)}const A=u.querySelector(r.messageContent);if(A?t==="md"?(f=A.innerHTML,s=!0):f=A.innerText:(console.warn("Snaggle: Message content selector failed for a turn, using turn's innerText fallback."),f=u.innerText,t==="md"&&(s=!1)),f=f?f.trim():"",!f){console.log(`Snaggle: Skipping turn ${T} due to empty content.`);return}t==="json"?g.push({role:p,content:f,timestamp:w}):t==="txt"?(n+=`Role: ${p}
+`,w&&(n+=`Time: ${w}
+`),n+=`Content:
+${f}
+
+---
+
+`):t==="md"&&(n+=`**${p.toUpperCase()}**${w?` (_${w}_)`:""}:
+
+`,n+=`${f}
+
+`,n+=`***
+
+`)});const c=new Date().toISOString().replace(/[:.]/g,"-");return i=`${o.split(".")[0]}-chat-${c}`,t==="json"?(n=JSON.stringify(g,null,2),i+=".json"):t==="txt"?i+=".txt":t==="md"&&(i+=".md"),{content:n,filename:i,requiresMarkdownConversion:t==="md"&&s}}catch(a){return console.error("Snaggle Chat Extraction Error:",a),{content:"",filename:"error.txt",error:`Failed to extract chat: ${(a==null?void 0:a.message)??"Unknown error"}`}}}const W="https://api.github.com/repos/";let y=null,B=[];function M(t){return document.getElementById(t)}function I(){return M("github-file-tree")}function F(){return M("github-download-zip")}function Z(){return M("github-select-all")}function O(){const t=I();if(!t)return null;let e=t.querySelector(".error-message");return e||(e=document.createElement("div"),e.className="error-message",e.style.color="#ffaaaa",e.style.padding="10px",t.prepend(e)),e}function J(t){try{const e=new URL(t);if(e.hostname!=="github.com")return!1;const n=e.pathname.split("/").filter(Boolean);if(n.length<2)return!1;const i=/^(settings|pulls|issues|wiki|projects|actions|security|pulse|graphs|find|upload|codespaces|notifications|stars|watching|forks|codesearch|marketplace|explore|topics|collections|events|sponsors|readme|about)$/i;if(n.length===2&&i.test(n[1])||n.length>2&&i.test(n[0]))return!1;const o=/^(tree|blob)/i;return!(n.length>2&&!o.test(n[2])&&/^(releases|tags|network|commits|branches|contributors|compare|labels|milestones|graphs|pulse|commit|blame|raw|search)$/i.test(n[2]))}catch{return!1}}function G(t){try{const n=new URL(t).pathname.split("/").filter(Boolean);if(n.length<2)throw new Error("Invalid GitHub repo URL path");const i=n[0],o=n[1];let r="HEAD",s="",a="";if(n.length>3&&(n[2]==="tree"||n[2]==="blob"))r=decodeURIComponent(n[3]),s=n.slice(4).map(decodeURIComponent).join("/"),a=s,n[2]==="blob"&&a.includes("/")?a=a.substring(0,a.lastIndexOf("/")):n[2]==="blob"&&(a="");else if(n.length>2){s=n.slice(2).map(decodeURIComponent).join("/"),a=s;const d=/\.\w+$/,g=s.split("/");s&&s.includes("/")&&d.test(g[g.length-1])?a=s.substring(0,s.lastIndexOf("/")):s&&!s.includes("/")&&d.test(s)&&(a="")}return{owner:i,repo:o,ref:r,path:s,apiPath:a||""}}catch(e){throw console.error("Snaggle: Failed to parse GitHub URL:",e),new Error(`Could not parse GitHub URL: ${t} - ${(e==null?void 0:e.message)??"Unknown reason"}`)}}async function K(t,e){var s;const n=I(),i=F(),o=O(),r=Z();if(!n||!i||!r){console.error("Snaggle: Cannot display file tree, critical UI elements missing.");return}n.innerHTML='<div class="loading-tree">Loading file tree...</div>',o&&(o.textContent=""),i.disabled=!0,r.checked=!1;try{y=G(e),console.log("Snaggle: Fetching tree for:",y),B=await V(y.owner,y.repo,y.ref,y.apiPath),B.length===0?n.innerHTML=`<div class="error-message">${y.apiPath?`Directory '${y.apiPath}' is empty or not found.`:"Repository seems empty or inaccessible."}</div>`:(Q(B,n),i.disabled=!0)}catch(a){console.error("Snaggle: Failed to display file tree:",a),o&&!o.textContent&&(o.textContent=`Error: ${(a==null?void 0:a.message)??"Unknown error"}`),(s=n.querySelector(".loading-tree"))==null||s.remove(),i.disabled=!0}}async function V(t,e,n="HEAD",i=""){const o=`${W}${t}/${e}/contents/${i}?ref=${n}`;console.log("Snaggle: Fetching from API:",o);const r=O();r&&(r.textContent="");try{const s=await fetch(o,{headers:{Accept:"application/vnd.github.v3+json"}});if(!s.ok){let c=`GitHub API Error: ${s.status} ${s.statusText}`;try{const u=await s.json();u!=null&&u.message&&(c+=` - ${u.message}`)}catch{}throw s.status===404&&(c=`Repo, branch, or path not found (${i||"root"}).`),s.status===403&&(c="Access denied (Rate limit? Private repo?)."),new Error(c)}const a=await s.json();let d;if(Array.isArray(a))d=a;else if(typeof a=="object"&&a!==null&&a.type==="file")d=[a];else throw new Error("Unexpected API response format.");const g=d.map(c=>({name:c.name,path:c.path,type:c.type==="file"||c.type==="dir"?c.type:"file",sha:c.sha,url:c.html_url})).filter(c=>c.type==="file"||c.type==="dir");return g.sort((c,u)=>{const T={dir:0,file:1},p=T[c.type],f=T[u.type];return p!==f?p-f:(c.name??"").localeCompare(u.name??"",void 0,{sensitivity:"base"})}),g}catch(s){throw console.error("Snaggle: GitHub API fetch error:",s),r&&(r.textContent=(s==null?void 0:s.message)??"Unknown API error"),s}}function Q(t,e){const n=document.createElement("ul");t.forEach(i=>{const o=document.createElement("li"),r=document.createElement("label"),s=document.createElement("input");s.type="checkbox",s.value=i.path,s.dataset.type=i.type,s.dataset.name=i.name,o.className=i.type==="dir"?"folder":"file";const a=document.createElement("span");a.textContent=i.name,r.appendChild(s),r.appendChild(a),o.appendChild(r),n.appendChild(o)}),e.innerHTML="",e.appendChild(n)}function L(){const t=I();if(!t)return[];const e=t.querySelectorAll('input[type="checkbox"]:checked:not(:disabled):not(#github-select-all)'),n=[];return e.forEach(i=>{const o=i.dataset.type;(o==="file"||o==="dir")&&i.dataset.name&&n.push({path:i.value,type:o,name:i.dataset.name})}),n}function X(t){const e=I(),n=F();if(!e||!n)return;const i=e.querySelectorAll('input[type="checkbox"]:not(:disabled):not(#github-select-all)');i.forEach(o=>o.checked=t),n.disabled=!t&&i.length>0}function Y(){const t=I();if(!t)return!1;const e=t.querySelectorAll('input[type="checkbox"]:not(:disabled):not(#github-select-all)');if(e.length===0)return!1;const n=t.querySelectorAll('input[type="checkbox"]:checked:not(:disabled):not(#github-select-all)');return e.length===n.length}function ee(t){try{const e=new URL(t).protocol;return e==="http:"||e==="https:"||e==="file:"}catch{return!1}}function te(t){var e,n,i;try{let o="",r=!1;if(t==="txt")o=(((e=document.body)==null?void 0:e.innerText)??((n=document.documentElement)==null?void 0:n.innerText)??"").trim();else if(t==="md"){const s=document.querySelector("main")||document.querySelector("article")||document.querySelector('[role="main"]')||document.body;if(s){const a=s.cloneNode(!0),d=["script","style","link","meta","noscript","svg","iframe","header","footer","nav","aside",'[role="banner"]','[role="contentinfo"]','[role="navigation"]','[role="complementary"]',"button","input","select","textarea",".advertisement",".ad","#ad",'[class*="banner"]',".popup",".modal","#cookie-notice",".cookie-consent"];a instanceof Element?(a.querySelectorAll(d.join(", ")).forEach(g=>g.remove()),o=a.innerHTML.trim(),r=!0):a instanceof HTMLElement?(console.warn("Snaggle: Content node was not an Element, using textContent."),o=((i=a.textContent)==null?void 0:i.trim())??"",r=!1):(console.warn("Snaggle: Cloned content node was not an Element or HTMLElement."),o="")}else throw new Error("Could not identify page content (body not found?).")}else return{content:"",error:`Unsupported format requested: ${t}`};return{content:o,requiresMarkdownConversion:r}}catch(o){return console.error("Snaggle General Extraction Error:",o),{content:"",error:`Failed to extract page data: ${(o==null?void 0:o.message)??"Unknown error"}`}}}function N(t){if(typeof TurndownService>"u")return console.error("Snaggle: Turndown library is not loaded."),"```html\n<!-- Turndown library was not available -->\n"+t+"\n```";try{const e={headingStyle:"atx",hr:"---",bulletListMarker:"*",codeBlockStyle:"fenced",emDelimiter:"_",strongDelimiter:"**",linkStyle:"inlined"};return new TurndownService(e).turndown(t)}catch(e){return console.error("Snaggle: Turndown HTML to Markdown conversion failed:",e),`## Markdown Conversion Failed
+
+Error: ${(e==null?void 0:e.message)??"Unknown error"}
+
+### Raw HTML:
+
+\`\`\`html
+`+t+"\n```"}}const h=chrome,l=document.getElementById("loading");document.getElementById("content");const S=document.getElementById("chat-exporter"),x=document.getElementById("github-downloader"),C=document.getElementById("general-exporter"),v=document.getElementById("unsupported-site"),b=document.getElementById("error-section"),H=document.getElementById("error-message");function $(t){l&&(l.hidden=!0),S&&(S.hidden=!0),x&&(x.hidden=!0),C&&(C.hidden=!0),v&&(v.hidden=!0),b&&(b.hidden=!0);const e=document.getElementById(t);e?e.hidden=!1:m(`Internal error: Section ID "${t}" not found.`)}function m(t){H&&(H.textContent=t);const e=document.getElementById("error-section");e?e.hidden=!1:console.error("Snaggle Error: Error section element not found."),console.error("Snaggle Error:",t)}function k(t="Loading..."){l&&(l.textContent=t,l.hidden=!1)}function ne(){return h.tabs.query({active:!0,currentWindow:!0}).then(t=>{var e,n;if((e=t==null?void 0:t[0])!=null&&e.id&&((n=t==null?void 0:t[0])!=null&&n.url))return t[0];throw new Error("Could not get active tab information (missing ID or URL).")})}function U(t){if(!t)return"untitled";const e=/[<>:"/\\|?*\u0000-\u001F]/g,n=/[\s._]+/g,i=/^[._\s]+|[._\s]+$/g;return(t.replace(e,"_").replace(n,"_").replace(i,"")||"untitled").substring(0,150)}document.addEventListener("DOMContentLoaded",async()=>{k("Detecting site...");let t;try{t=await ne();const e=t.url;if(console.log("Snaggle: Current URL:",e,"Tab ID:",t.id),!e.startsWith("http:")&&!e.startsWith("https:")&&!e.startsWith("file:")){m(`Cannot operate on this page protocol. URL: ${e.substring(0,50)}...`);return}_(e)?($("chat-exporter"),oe(t)):J(e)?($("github-downloader"),re(t,e)):ee(e)?($("general-exporter"),ie(t)):$("unsupported-site")}catch(e){m(`Snaggle: Initialization failed: ${(e==null?void 0:e.message)??"Unknown error"}`)}finally{l&&l.hidden===!1&&(S!=null&&S.hidden)&&(x!=null&&x.hidden)&&(C!=null&&C.hidden)&&(v!=null&&v.hidden)&&(b!=null&&b.hidden)&&(l.hidden=!0),b&&!b.hidden&&l&&(l.hidden=!0)}});function oe(t){var e,n,i;(e=document.getElementById("chat-txt"))==null||e.addEventListener("click",()=>D(t,"txt")),(n=document.getElementById("chat-md"))==null||n.addEventListener("click",()=>D(t,"md")),(i=document.getElementById("chat-json"))==null||i.addEventListener("click",()=>D(t,"json"))}function re(t,e){const n=document.getElementById("github-download-zip"),i=document.getElementById("github-select-all"),o=document.getElementById("github-file-tree");if(!n||!i||!o){m("GitHub UI elements missing.");return}n.addEventListener("click",()=>se(t,e)),i.addEventListener("change",r=>{X(r.target.checked),n.disabled=L().length===0}),o.addEventListener("change",r=>{const s=r.target;if(s!=null&&s.matches('input[type="checkbox"]')&&s!==i){const a=L().length>0;n.disabled=!a,i.checked=a&&Y()}}),K(t,e)}function ie(t){var e,n,i;(e=document.getElementById("general-pdf"))==null||e.addEventListener("click",()=>P(t,"pdf")),(n=document.getElementById("general-md"))==null||n.addEventListener("click",()=>P(t,"md")),(i=document.getElementById("general-txt"))==null||i.addEventListener("click",()=>P(t,"txt"))}async function D(t,e){if(k(`Exporting chat as ${e.toUpperCase()}...`),!t.id){m("Tab ID missing for chat export.");return}try{const n=await h.scripting.executeScript({target:{tabId:t.id},func:g=>z(g),args:[e]}),i=n==null?void 0:n[0],o=i==null?void 0:i.result;if(!o||o.error)throw new Error((o==null?void 0:o.error)||"Chat script execution failed or returned no result.");const{content:r,filename:s,requiresMarkdownConversion:a}=o;let d=r;e==="md"&&a&&(typeof TurndownService<"u"?d=N(r):(console.warn("Snaggle: Turndown unavailable for chat MD."),d=`<!-- Turndown library missing -->
+
+`+r)),j(d,U(s)),l&&(l.textContent="Download started!"),setTimeout(()=>window.close(),1500)}catch(n){m(`Snaggle: Chat export failed: ${(n==null?void 0:n.message)??"Unknown error"}`),l&&(l.hidden=!0)}}async function se(t,e){const n=document.getElementById("github-download-zip");if(!n)return;const i=L();if(i.length===0){alert("Please select files/folders.");return}n.disabled=!0,n.textContent="Zipping...",k("Preparing download...");try{const o=G(e);let r=o.repo+(i.length===1?"-"+U(i[0].name):"-selection");const s=U(`${r}-${Date.now()}.zip`),a=await h.runtime.sendMessage({action:"createAndDownloadZip",filesToFetch:i,repoInfo:o,filename:s});if(a!=null&&a.success)console.log("Snaggle: ZIP download initiated."),l&&(l.textContent="Download started!"),setTimeout(()=>window.close(),1500);else throw h.runtime.lastError?new Error(h.runtime.lastError.message):new Error((a==null?void 0:a.error)||"Unknown error during ZIP creation.")}catch(o){m(`Snaggle: GitHub download error: ${(o==null?void 0:o.message)??"Unknown error"}`);const r=document.getElementById("github-download-zip");r&&(r.disabled=L().length===0,r.textContent="Download Selected (.zip)")}finally{!window.closed&&l&&(l.hidden=!0)}}async function P(t,e){if(k(`Exporting page as ${e.toUpperCase()}...`),!t.id){m("Tab ID missing for general export.");return}try{const n=t.title||"page",i=U(n);if(e==="pdf"){k("Opening Print Dialog..."),await h.scripting.executeScript({target:{tabId:t.id},func:()=>{window.print()}}),console.log("Snaggle: Print dialog requested."),setTimeout(()=>window.close(),500);return}else if(e==="txt"||e==="md"){const o=await h.scripting.executeScript({target:{tabId:t.id},func:u=>te(u),args:[e]}),r=o==null?void 0:o[0],s=r==null?void 0:r.result;if(!s||s.error)throw new Error((s==null?void 0:s.error)||"General script execution failed or returned no result.");let a=s.content;const d=s.requiresMarkdownConversion;e==="md"&&d&&(typeof TurndownService<"u"?a=N(a):(console.warn("Snaggle: Turndown unavailable for general MD."),a=`<!-- Turndown library missing -->
+
+`+a));const g=`${i}.${e}`;j(a,g,e==="txt"?"text/plain;charset=utf-8":"text/markdown;charset=utf-8"),l&&(l.textContent="Download started!"),setTimeout(()=>window.close(),1500)}else throw new Error(`Unsupported export format: ${e}`)}catch(n){m(`Snaggle: General export failed: ${(n==null?void 0:n.message)??"Unknown error"}`),l&&(l.hidden=!0)}}function j(t,e,n="text/plain;charset=utf-8"){try{const i=new Blob([t],{type:n}),o=URL.createObjectURL(i);h.runtime.sendMessage({action:"downloadFile",url:o,filename:e}).then(r=>{r!=null&&r.success?(console.log(`Snaggle: Download ${e} initiated via background.`),setTimeout(()=>URL.revokeObjectURL(o),6e4)):(h.runtime.lastError?m(`Download failed: ${h.runtime.lastError.message}`):m(`Download failed: ${(r==null?void 0:r.error)||"Unknown error"}`),URL.revokeObjectURL(o))}).catch(r=>{m(`Snaggle: Error sending download message: ${r.message}`),URL.revokeObjectURL(o)})}catch(i){m(`Snaggle: Failed to prepare download content: ${(i==null?void 0:i.message)??"Unknown error"}`)}}console.log("Snaggle Popup Script Loaded (Vite/TS).");
+]]></content>
+    </file>
+    <file>
+      <filename>manifest.json</filename>
+      <relPath>"Snaggle/dist/manifest.json"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/dist/manifest.json"</absPath>
+      <content><![CDATA[
+{
+  "manifest_version": 3,
+  "name": "Snaggle",
+  "version": "1.0",
+  "description": "Download content from specific websites via the extension popup.",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads"
+  ],
+  "host_permissions": [
+    "*://api.github.com/*"
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon_16.png",
+      "48": "icons/icon_48.png"
+    }
+  }
+}
+]]></content>
+    </file>
+    <file>
+      <filename>popup.html</filename>
+      <relPath>"Snaggle/dist/popup.html"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/dist/popup.html"</absPath>
+      <content><![CDATA[
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snaggle</title>
+    <!-- Vite will inject the processed CSS link here -->
+    <script type="module" crossorigin src="/assets/popup-CqSU343t.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/popup-BTO7rJnB.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Snaggle</h1>
+      </header>
+      <main id="content">
+        <!-- Loading/Error/Feature Sections remain exactly the same HTML structure -->
+        <div id="loading" hidden>Detecting site...</div>
+        <div id="chat-exporter" class="feature-section" hidden>
+          <h2>Chat Exporter</h2>
+          <p>Download current chat thread:</p>
+          <div class="button-group">
+            <button id="chat-txt" title="Download as Plain Text">.txt</button>
+            <button id="chat-md" title="Download as Markdown">.md</button>
+            <button id="chat-json" title="Download as JSON">.json</button>
+          </div>
+        </div>
+        <div id="github-downloader" class="feature-section" hidden>
+          <h2>GitHub Downloader</h2>
+          <p>Select files/folders from current directory:</p>
+          <div id="github-file-tree" class="file-tree">
+            <div class="loading-tree">Loading file tree...</div>
+          </div>
+          <p style="margin-top: 10px; margin-bottom: 5px">
+            <label>
+              <input type="checkbox" id="github-select-all" /> Select All
+              Visible
+            </label>
+          </p>
+          <button id="github-download-zip" class="download-button" disabled>
+            Download Selected (.zip)
+          </button>
+        </div>
+        <div id="general-exporter" class="feature-section" hidden>
+          <h2>General Page Exporter</h2>
+          <p>Download current page content:</p>
+          <div class="button-group">
+            <button id="general-pdf" title="Save as PDF (uses Print Dialog)">
+              PDF
+            </button>
+            <button id="general-md" title="Download as Markdown">.md</button>
+            <button id="general-txt" title="Download as Plain Text">
+              .txt
+            </button>
+          </div>
+        </div>
+        <div id="unsupported-site" class="feature-section" hidden>
+          <h2>Unsupported</h2>
+          <p>
+            Snaggle feature not available for this specific page or protocol.
+          </p>
+        </div>
+        <div id="error-section" class="feature-section" hidden>
+          <h2>Error</h2>
+          <p id="error-message"></p>
+          <button onclick="window.close()">Close</button>
+        </div>
+      </main>
+    </div>
+    <!-- Load vendor script from public directory (copied by Vite) -->
+    <script src="/vendor/turndown.js"></script>
+    <!-- Vite injects the main popup script -->
+  </body>
+</html>
+]]></content>
+    </file>
+    <file>
+      <filename>service-worker-loader.js</filename>
+      <relPath>"Snaggle/dist/service-worker-loader.js"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/dist/service-worker-loader.js"</absPath>
+      <content><![CDATA[
+import './assets/index.ts-C5yHeIjT.js';
+]]></content>
+    </file>
+    <file>
+      <filename>README.md</filename>
+      <relPath>"Snaggle/docs/README.md"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/docs/README.md"</absPath>
+      <content><![CDATA[
+# Snaggle
+]]></content>
+    </file>
+    <file>
+      <filename>popup.html</filename>
+      <relPath>"Snaggle/popup.html"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/popup.html"</absPath>
+      <content><![CDATA[
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snaggle</title>
+    <!-- Vite will inject the processed CSS link here -->
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Snaggle</h1>
+      </header>
+      <main id="content">
+        <!-- Loading/Error/Feature Sections remain exactly the same HTML structure -->
+        <div id="loading" hidden>Detecting site...</div>
+        <div id="chat-exporter" class="feature-section" hidden>
+          <h2>Chat Exporter</h2>
+          <p>Download current chat thread:</p>
+          <div class="button-group">
+            <button id="chat-txt" title="Download as Plain Text">.txt</button>
+            <button id="chat-md" title="Download as Markdown">.md</button>
+            <button id="chat-json" title="Download as JSON">.json</button>
+          </div>
+        </div>
+        <div id="github-downloader" class="feature-section" hidden>
+          <h2>GitHub Downloader</h2>
+          <p>Select files/folders from current directory:</p>
+          <div id="github-file-tree" class="file-tree">
+            <div class="loading-tree">Loading file tree...</div>
+          </div>
+          <p style="margin-top: 10px; margin-bottom: 5px">
+            <label>
+              <input type="checkbox" id="github-select-all" /> Select All
+              Visible
+            </label>
+          </p>
+          <button id="github-download-zip" class="download-button" disabled>
+            Download Selected (.zip)
+          </button>
+        </div>
+        <div id="general-exporter" class="feature-section" hidden>
+          <h2>General Page Exporter</h2>
+          <p>Download current page content:</p>
+          <div class="button-group">
+            <button id="general-pdf" title="Save as PDF (uses Print Dialog)">
+              PDF
+            </button>
+            <button id="general-md" title="Download as Markdown">.md</button>
+            <button id="general-txt" title="Download as Plain Text">
+              .txt
+            </button>
+          </div>
+        </div>
+        <div id="unsupported-site" class="feature-section" hidden>
+          <h2>Unsupported</h2>
+          <p>
+            Snaggle feature not available for this specific page or protocol.
+          </p>
+        </div>
+        <div id="error-section" class="feature-section" hidden>
+          <h2>Error</h2>
+          <p id="error-message"></p>
+          <button onclick="window.close()">Close</button>
+        </div>
+      </main>
+    </div>
+    <!-- Load vendor script from public directory (copied by Vite) -->
+    <script src="/vendor/turndown.js"></script>
+    <!-- Vite injects the main popup script -->
+    <script type="module" src="/src/popup/index.ts"></script>
+  </body>
+</html>
+]]></content>
+    </file>
+    <file>
+      <filename>index.ts</filename>
+      <relPath>"Snaggle/src/background/index.ts"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/src/background/index.ts"</absPath>
+      <content><![CDATA[
+// Declare JSZip assuming it will become global after dynamic load/eval
+declare var JSZip: typeof import('jszip');
+
+// Use chrome.* APIs with types from @types/chrome
+const api = chrome;
+
+// --- Type Definitions ---
+interface GitHubFileItem { path: string; type: 'file' | 'dir'; name: string; }
+interface RepoInfo { owner: string; repo: string; ref: string; }
+interface BackgroundMessage { action: 'downloadFile' | 'createAndDownloadZip'; url?: string; filename?: string; filesToFetch?: GitHubFileItem[]; repoInfo?: RepoInfo; }
+interface BackgroundResponse { success: boolean; error?: string; downloadId?: number; }
+// --- End Type Definitions ---
+
+// --- Function to Load and Execute JSZip ---
+let jszipLoaded = false;
+let jszipLoadingPromise: Promise<void> | null = null;
+
+async function loadJSZip(): Promise<void> {
+    if (jszipLoaded || typeof JSZip !== 'undefined') {
+        if (!jszipLoaded) { console.log("Snaggle: JSZip already defined."); jszipLoaded = true; }
+        return Promise.resolve();
+    }
+    if (jszipLoadingPromise) { return jszipLoadingPromise; }
+    console.log("Snaggle: Initiating JSZip dynamic load...");
+    jszipLoadingPromise = (async () => {
+        try {
+            const jszipPath = '/vendor/jszip.min.js';
+            const response = await fetch(jszipPath);
+            if (!response.ok) throw new Error(`Failed to fetch JSZip (${response.status}): ${response.statusText}`);
+            const scriptContent = await response.text();
+            new Function(scriptContent)(); // Execute in global scope
+            if (typeof JSZip === 'undefined') throw new Error("JSZip script executed but global not defined.");
+            jszipLoaded = true;
+            console.log("Snaggle: JSZip loaded dynamically.");
+        } catch (e: any) {
+            console.error("Snaggle: Failed to load/execute JSZip:", e);
+            jszipLoaded = false; throw e;
+        } finally { jszipLoadingPromise = null; }
+    })();
+    return jszipLoadingPromise;
+}
+
+// --- Listener ---
+api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.runtime.MessageSender, sendResponse: (response: BackgroundResponse) => void): boolean | undefined => {
+    console.log("Snaggle Background received message:", message);
+
+    if (message.action === "downloadFile") {
+        if (!message.url || !message.filename) {
+            console.error("Snaggle: Missing URL/filename for downloadFile.");
+            sendResponse({ success: false, error: "Missing URL or filename." });
+            return false;
+        }
+        api.downloads.download({ url: message.url, filename: message.filename, saveAs: false })
+            .then(downloadId => {
+                // Promise resolved, assume success if downloadId is valid
+                if (downloadId !== undefined && downloadId !== 0) {
+                    console.log(`Snaggle: Download started with ID: ${downloadId}`);
+                    sendResponse({ success: true, downloadId: downloadId });
+                } else {
+                    // This case might indicate an issue even without explicit rejection
+                    console.error(`Snaggle: Download initiation returned invalid ID (${downloadId}). URL: ${message.url}`);
+                    sendResponse({ success: false, error: "Download could not be initiated (invalid ID)." });
+                }
+            })
+            .catch((error: Error) => { // Catch promise rejections
+                console.error(`Snaggle: Download promise failed: ${error.message}`);
+                sendResponse({ success: false, error: error.message });
+            });
+        return true; // Async response required
+
+    } else if (message.action === "createAndDownloadZip") {
+        loadJSZip().then(() => {
+            if (!jszipLoaded || typeof JSZip === 'undefined') {
+                 console.error("Snaggle: JSZip could not be loaded for ZIP.");
+                 sendResponse({ success: false, error: "JSZip library could not be loaded." });
+                 return;
+            }
+            if (!message.filesToFetch || !message.repoInfo) {
+                 console.error("Snaggle: Missing files/repoInfo for ZIP.");
+                 sendResponse({ success: false, error: "Missing filesToFetch or repoInfo." });
+                 return;
+            }
+
+            let blobUrl: string | null = null;
+            createZip(message.filesToFetch, message.repoInfo, message.filename || 'github-download.zip')
+                .then((blob: Blob) => {
+                    blobUrl = URL.createObjectURL(blob);
+                    return api.downloads.download({ url: blobUrl, filename: message.filename || 'github-download.zip', saveAs: false });
+                })
+                .then((downloadId?: number) => {
+                    if (downloadId !== undefined && downloadId !== 0) {
+                        console.log(`Snaggle: ZIP Download started with ID: ${downloadId}`);
+                        sendResponse({ success: true, downloadId: downloadId });
+                    } else {
+                        // Handle invalid ID case
+                        console.error(`Snaggle: ZIP Download initiation returned invalid ID (${downloadId}).`);
+                        sendResponse({ success: false, error: "ZIP Download could not be initiated (invalid ID)." });
+                    }
+                })
+                .catch((error: Error) => { // Catch errors from createZip or download
+                    console.error(`Snaggle: ZIP Creation/Download promise failed: ${error.message}`);
+                    sendResponse({ success: false, error: error.message });
+                })
+                .finally(() => { // Revoke URL regardless of success/failure
+                    if (blobUrl) {
+                         console.log("Snaggle: Revoking ZIP blob URL in finally block.");
+                        setTimeout(() => { if (blobUrl) URL.revokeObjectURL(blobUrl); } , 60000);
+                        blobUrl = null;
+                    }
+                });
+
+        }).catch(loadError => { // Catch errors from loadJSZip() promise
+             console.error("Snaggle: Error during JSZip loading sequence:", loadError);
+             sendResponse({ success: false, error: `Failed to prepare ZIP library: ${ (loadError as Error)?.message ?? 'Unknown load error'}` });
+        });
+        return true; // Async response required
+    }
+});
+
+// --- GitHub Zip Creation Helper ---
+async function createZip(filesToFetch: GitHubFileItem[], repoInfo: RepoInfo, filename: string): Promise<Blob> {
+    if (typeof JSZip === 'undefined') { throw new Error("JSZip is not available when trying to create ZIP."); }
+    const zip = new JSZip();
+    const { owner, repo, ref } = repoInfo;
+    console.log("Snaggle: Fetching files for ZIP:", filesToFetch);
+    const fetchPromises = filesToFetch.map(async (item) => {
+        if (item.type === 'file') {
+            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${item.path}?ref=${ref}`;
+            try {
+                const response = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3.raw' } });
+                if (!response.ok) {
+                    let errorMsg = `GitHub API error: ${response.status} ${response.statusText}`;
+                    try { const errBody = await response.text(); errorMsg += ` Body: ${errBody.substring(0,100)}`; } catch (e) { /* Ignore body read error */ }
+                    throw new Error(`${errorMsg} for ${item.path}.`);
+                }
+                const content: Blob = await response.blob();
+                zip.file(item.path, content, { binary: true });
+            } catch (error: any) {
+                console.error(`Snaggle: Failed to fetch file ${item.path}:`, error);
+                zip.file(item.path + ".error.txt", `Failed to fetch '${item.path}':\n${error.message}`);
+            }
+        } else if (item.type === 'dir') {
+            console.warn(`Snaggle: Directory selection (${item.path}) - recursive download not implemented. Creating folder marker.`);
+            zip.folder(item.path);
+        }
+    });
+    await Promise.all(fetchPromises);
+    console.log("Snaggle: Generating ZIP file...");
+    return zip.generateAsync({ type: "blob", compression: "DEFLATE", compressionOptions: { level: 6 } });
+}
+
+console.log("Snaggle Background Service Worker Loaded (TypeScript/Vite - Module).");]]></content>
+    </file>
+    <file>
+      <filename>chat_exporter.ts</filename>
+      <relPath>"Snaggle/src/modules/chat_exporter.ts"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/src/modules/chat_exporter.ts"</absPath>
+      <content><![CDATA[
+// Interfaces for structure (can be shared)
+interface ChatMessage {
+  role: string;
+  content: string;
+  timestamp: string | null;
+}
+
+interface ChatExtractionResult {
+  content: string;
+  filename: string;
+  error?: string;
+  requiresMarkdownConversion?: boolean;
+}
+
+
+export function isChatSite(url: string): boolean {
+  const chatDomains: string[] = [
+      "chat.openai.com",
+      "gemini.google.com",
+      "aistudio.google.com"
+  ];
+  try {
+      const hostname = new URL(url).hostname;
+      return chatDomains.some(domain => hostname === domain);
+  } catch (e) {
+      return false; // Invalid URL
+  }
+}
+
+// Add parameter type
+export function extractChatData(format: 'txt' | 'md' | 'json'): ChatExtractionResult {
+  // --- Site-Specific Selectors --- KEEP YOUR SELECTORS HERE
+  const selectors: { [key: string]: any } = {
+      "chat.openai.com": { container: 'main', messageTurn: 'div[data-testid^="conversation-turn-"]', messageContent: '.markdown', roleSelector: 'div[data-message-author-role]', roleAttribute: 'data-message-author-role', timestampSelector: 'time[datetime]', timestampAttribute: 'datetime' },
+      "gemini.google.com": { container: 'main', messageTurn: '.message', messageContent: '.content .text', roleIndicator: '.participant .name' },
+      "aistudio.google.com": { container: 'div.chat-container', messageTurn: 'div.message-row', messageContent: 'div.message-text', roleIndicator: 'div.sender-role' },
+  };
+
+  let extractedContent: string = "";
+  let filename: string = "chat-export";
+  const hostname: string = window.location.hostname;
+  const siteConfig = selectors[hostname];
+  let requiresMarkdownConversion: boolean = false;
+
+  if (!siteConfig) {
+      return { content: "", filename: "error.txt", error: `No selectors defined for ${hostname}. Needs configuration.` };
+  }
+
+  try {
+      const chatContainer: Element | null = siteConfig.container ? document.querySelector(siteConfig.container) : document.body;
+      if (!chatContainer) throw new Error(`Chat container ('${siteConfig.container || 'body'}') not found.`);
+
+      const turns: NodeListOf<Element> = chatContainer.querySelectorAll(siteConfig.messageTurn);
+      if (!turns || turns.length === 0) {
+           throw new Error(`No chat turns found using selector: "${siteConfig.messageTurn}". Site structure may have changed.`);
+      }
+      console.log(`Snaggle: Found ${turns.length} chat turns/messages using "${siteConfig.messageTurn}".`);
+
+      const chatData: ChatMessage[] = []; // Use interface
+
+      turns.forEach((turn: Element, index: number) => {
+          let role: string = "unknown";
+          let textContent: string = "";
+          let timestamp: string | null = null; // Explicitly null
+
+          // --- Extract Role --- (Add types to elements)
+          let roleElement: Element | null = siteConfig.roleSelector ? turn.querySelector(siteConfig.roleSelector) : null;
+          if (roleElement && siteConfig.roleAttribute) {
+               role = roleElement.getAttribute(siteConfig.roleAttribute) || "unknown";
+          } else if (siteConfig.roleIndicator) {
+               const roleIndicatorElement: Element | null = turn.querySelector(siteConfig.roleIndicator);
+               if (roleIndicatorElement) role = roleIndicatorElement.textContent?.trim().toLowerCase() || "unknown";
+          }
+          role = role.replace(/^model$/i, "assistant");
+
+          // --- Extract Timestamp --- (Add types to elements)
+           if (siteConfig.timestampSelector) {
+              const timeElement: Element | null = turn.querySelector(siteConfig.timestampSelector);
+              if (timeElement) {
+                  timestamp = siteConfig.timestampAttribute ? timeElement.getAttribute(siteConfig.timestampAttribute) : timeElement.textContent;
+                  timestamp = timestamp ? timestamp.trim() : null;
+              }
+           }
+
+          // --- Extract Content --- (Add types to elements)
+          const contentElement: HTMLElement | null = turn.querySelector(siteConfig.messageContent); // Use HTMLElement for innerText/innerHTML
+          if (contentElement) {
+               if (format === 'md') {
+                   textContent = contentElement.innerHTML;
+                   requiresMarkdownConversion = true;
+               } else {
+                   textContent = contentElement.innerText;
+               }
+          } else {
+              console.warn("Snaggle: Message content selector failed for a turn, using turn's innerText fallback.");
+               // Use HTMLElement for innerText
+              textContent = (turn as HTMLElement).innerText;
+              if (format === 'md') requiresMarkdownConversion = false;
+          }
+          textContent = textContent ? textContent.trim() : "";
+
+          if (!textContent) {
+              console.log(`Snaggle: Skipping turn ${index} due to empty content.`);
+              return; // Skip this iteration
+          }
+
+          // --- Assemble Output ---
+          if (format === 'json') {
+              chatData.push({ role, content: textContent, timestamp });
+          } else if (format === 'txt') {
+              extractedContent += `Role: ${role}\n`;
+              if (timestamp) extractedContent += `Time: ${timestamp}\n`;
+              extractedContent += `Content:\n${textContent}\n\n---\n\n`;
+          } else if (format === 'md') {
+               extractedContent += `**${role.toUpperCase()}**${timestamp ? ` (_${timestamp}_)` : ''}:\n\n`;
+               extractedContent += `${textContent}\n\n`;
+               extractedContent += `***\n\n`;
+          }
+      });
+
+      const dateStr: string = new Date().toISOString().replace(/[:.]/g, '-');
+      filename = `${hostname.split('.')[0]}-chat-${dateStr}`;
+
+      if (format === 'json') {
+          extractedContent = JSON.stringify(chatData, null, 2);
+          filename += '.json';
+      } else if (format === 'txt') {
+          filename += '.txt';
+      } else if (format === 'md') {
+          filename += '.md';
+      }
+
+      return {
+          content: extractedContent,
+          filename: filename,
+          requiresMarkdownConversion: format === 'md' && requiresMarkdownConversion
+      };
+
+  } catch (error: any) {
+      console.error("Snaggle Chat Extraction Error:", error);
+      return { content: "", filename:"error.txt", error: `Failed to extract chat: ${error?.message ?? 'Unknown error'}` };
+  }
+}]]></content>
+    </file>
+    <file>
+      <filename>general_exporter.ts</filename>
+      <relPath>"Snaggle/src/modules/general_exporter.ts"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/src/modules/general_exporter.ts"</absPath>
+      <content><![CDATA[
+// Declare TurndownService as loaded globally via script tag in popup.html
+declare var TurndownService: any; // Using 'any' type for simplicity
+
+// Interface for return type
+interface PageExtractionResult {
+    content: string;
+    error?: string;
+    requiresMarkdownConversion?: boolean;
+}
+
+export function isGeneralSite(url: string): boolean {
+     try {
+        const protocol = new URL(url).protocol;
+        return protocol === 'http:' || protocol === 'https:' || protocol === 'file:';
+    } catch (e) { return false; }
+}
+
+// Function executed IN THE CONTEXT OF THE WEBPAGE
+export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
+    // --- Log entry into the content script function ---
+    console.log(`Snaggle Content Script: extractPageData called with format: ${format}`);
+    try {
+        let content: string = "";
+        let requiresMarkdownConversion: boolean = false;
+
+        if (!document.body) {
+            console.error("Snaggle Content Script: document.body is null or undefined!");
+            throw new Error("Document body not found.");
+        }
+
+        if (format === 'txt') {
+            console.log("Snaggle Content Script: Extracting as TXT using body.innerText");
+            content = (document.body.innerText ?? document.documentElement?.innerText ?? "").trim();
+             if (!content) {
+                 console.warn("Snaggle Content Script: TXT extraction resulted in empty content.");
+             }
+        } else if (format === 'md') {
+             console.log("Snaggle Content Script: Extracting as MD, searching for main content node...");
+            // Type the source element
+            const contentNodeSource: Element | null =
+                document.querySelector('main') ||
+                document.querySelector('article') ||
+                document.querySelector('[role="main"]') ||
+                document.body; // Fallback to body
+
+            if (contentNodeSource) {
+                 console.log(`Snaggle Content Script: Found content node source: ${contentNodeSource.tagName}${contentNodeSource.id ? '#'+contentNodeSource.id : ''}`);
+                 const contentNode: Node = contentNodeSource.cloneNode(true);
+                 console.log("Snaggle Content Script: Cloned content node.");
+
+                 const selectorsToRemove: string[] = [
+                     'script', 'style', 'link', 'meta', 'noscript', 'svg', 'iframe',
+                     'header', 'footer', 'nav', 'aside', '[role="banner"]',
+                     '[role="contentinfo"]', '[role="navigation"]', '[role="complementary"]',
+                     'button', 'input', 'select', 'textarea', '.advertisement', '.ad',
+                     '#ad', '[class*="banner"]', '.popup', '.modal', '#cookie-notice',
+                     '.cookie-consent'
+                 ];
+
+                 // Ensure contentNode is an Element before calling querySelectorAll
+                 if (contentNode instanceof Element) {
+                    console.log("Snaggle Content Script: Cleaning cloned Element node...");
+                    let removedCount = 0;
+                    contentNode.querySelectorAll<Element>(selectorsToRemove.join(', '))
+                               .forEach((el: Element) => {
+                                   el.remove();
+                                   removedCount++;
+                                });
+                    console.log(`Snaggle Content Script: Removed ${removedCount} elements during cleaning.`);
+                    content = contentNode.innerHTML.trim();
+                    requiresMarkdownConversion = true;
+                    console.log(`Snaggle Content Script: Extracted HTML content length: ${content.length}`);
+
+                 } else {
+                     // This case should be rare if we start from body/main/article
+                     console.warn("Snaggle Content Script: Cloned content node was not an Element. Attempting textContent.");
+                     content = contentNode.textContent?.trim() ?? "";
+                     requiresMarkdownConversion = false;
+                     console.log(`Snaggle Content Script: Extracted textContent length: ${content.length}`);
+                 }
+
+            } else {
+                // Should not happen as document.body should exist
+                console.error("Snaggle Content Script: Could not identify any content node source (main, article, body).");
+                throw new Error("Could not identify page content (body/main/article not found?).");
+            }
+        } else {
+             // This case should technically not be reachable if called correctly
+             console.warn(`Snaggle Content Script: Received unexpected format: ${format}`);
+             return { content: "", error: `Unsupported format requested: ${format}` };
+        }
+
+        console.log("Snaggle Content Script: Extraction successful.");
+        return {
+            content: content,
+            requiresMarkdownConversion: requiresMarkdownConversion
+        };
+
+    } catch (error: any) {
+        // --- Log the specific error occurring inside the content script ---
+        console.error("Snaggle Content Script: Error during extraction:", error);
+        return { content: "", error: `Failed to extract page data: ${error?.message ?? 'Unknown error'}` };
+    }
+}
+
+
+// This function runs in popup.js AFTER getting HTML content from extractPageData
+export function convertHtmlToMarkdown(htmlContent: string): string {
+    // No changes needed here, but keep for completeness
+    if (typeof TurndownService === 'undefined') {
+        console.error("Snaggle: Turndown library is not loaded.");
+        return "```html\n<!-- Turndown library was not available -->\n" + htmlContent + "\n```";
+    }
+    try {
+         const turndownOptions: any = {
+             headingStyle: 'atx', hr: '---', bulletListMarker: '*',
+             codeBlockStyle: 'fenced', emDelimiter: '_', strongDelimiter: '**',
+             linkStyle: 'inlined'
+         };
+         const turndownService = new TurndownService(turndownOptions);
+         const markdown: string = turndownService.turndown(htmlContent);
+         return markdown;
+    } catch (error: any) {
+         console.error("Snaggle: Turndown HTML to Markdown conversion failed:", error);
+         return `## Markdown Conversion Failed\n\nError: ${error?.message ?? 'Unknown error'}\n\n### Raw HTML:\n\n` + "```html\n" + htmlContent + "\n```";
+    }
+}]]></content>
+    </file>
+    <file>
+      <filename>github_downloader.ts</filename>
+      <relPath>"Snaggle/src/modules/github_downloader.ts"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/src/modules/github_downloader.ts"</absPath>
+      <content><![CDATA[
+// Interfaces for structure
+interface RepoInfo { owner: string; repo: string; ref: string; path: string; apiPath: string; }
+interface GitHubApiItem { name: string; path: string; type: 'file' | 'dir' | 'symlink' | 'submodule'; sha: string; html_url: string; }
+export interface GitHubFileItem { name: string; path: string; type: 'file' | 'dir'; sha?: string; url?: string; }
+
+
+// --- Constants ---
+const GITHUB_API_BASE: string = "https://api.github.com/repos/";
+
+// --- State ---
+let currentRepoInfo: RepoInfo | null = null;
+let fileTreeData: GitHubFileItem[] = [];
+
+// --- UI Element Getters ---
+function getElementById<T extends HTMLElement>(id: string): T | null { return document.getElementById(id) as T | null; }
+function getFileTreeContainer(): HTMLDivElement | null { return getElementById<HTMLDivElement>('github-file-tree'); }
+function getDownloadButton(): HTMLButtonElement | null { return getElementById<HTMLButtonElement>('github-download-zip'); }
+function getSelectAllCheckbox(): HTMLInputElement | null { return getElementById<HTMLInputElement>('github-select-all'); }
+// Add explicit return type
+function getErrorContainerWithinTree(): HTMLDivElement | null {
+    const container = getFileTreeContainer();
+    if (!container) return null; // Return null if no container
+    let errorDiv = container.querySelector<HTMLDivElement>('.error-message');
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.style.color = '#ffaaaa'; errorDiv.style.padding = '10px';
+        container.prepend(errorDiv);
+    }
+    return errorDiv; // Return the div or null if querySelector initially failed
+}
+
+// --- URL Parsing & Validation ---
+export function isGitHubRepoPage(urlString: string): boolean {
+    try {
+        const url = new URL(urlString);
+        if (url.hostname !== 'github.com') return false;
+        const pathParts = url.pathname.split('/').filter(Boolean);
+        if (pathParts.length < 2) return false;
+        const nonCodePaths = /^(settings|pulls|issues|wiki|projects|actions|security|pulse|graphs|find|upload|codespaces|notifications|stars|watching|forks|codesearch|marketplace|explore|topics|collections|events|sponsors|readme|about)$/i;
+        if (pathParts.length === 2 && nonCodePaths.test(pathParts[1])) return false;
+        if (pathParts.length > 2 && nonCodePaths.test(pathParts[0])) return false;
+        const validSecondPart = /^(tree|blob)/i;
+        if (pathParts.length > 2 && !validSecondPart.test(pathParts[2])) {
+             const knownNonCodeSegments = /^(releases|tags|network|commits|branches|contributors|compare|labels|milestones|graphs|pulse|commit|blame|raw|search)$/i;
+             if (knownNonCodeSegments.test(pathParts[2])) return false;
+        }
+        return true;
+    } catch (e) { return false; }
+}
+export function parseRepoUrl(urlString: string): RepoInfo {
+     try {
+        const url = new URL(urlString);
+        const pathParts = url.pathname.split('/').filter(Boolean);
+        if (pathParts.length < 2) throw new Error("Invalid GitHub repo URL path");
+
+        const owner: string = pathParts[0];
+        const repo: string = pathParts[1];
+        let ref: string = 'HEAD';
+        let currentPath: string = '';
+        let apiPath: string = '';
+
+        if (pathParts.length > 3 && (pathParts[2] === 'tree' || pathParts[2] === 'blob')) {
+            ref = decodeURIComponent(pathParts[3]);
+            currentPath = pathParts.slice(4).map(decodeURIComponent).join('/');
+            apiPath = currentPath;
+            if (pathParts[2] === 'blob' && apiPath.includes('/')) {
+                apiPath = apiPath.substring(0, apiPath.lastIndexOf('/'));
+            } else if (pathParts[2] === 'blob') { apiPath = ''; }
+        } else if (pathParts.length > 2) {
+            currentPath = pathParts.slice(2).map(decodeURIComponent).join('/');
+            apiPath = currentPath;
+            const fileNamePattern = /\.\w+$/;
+            const pathSegments = currentPath.split('/');
+            if (currentPath && currentPath.includes('/') && fileNamePattern.test(pathSegments[pathSegments.length-1])) {
+                 apiPath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            } else if (currentPath && !currentPath.includes('/') && fileNamePattern.test(currentPath)){
+                 apiPath = '';
+            }
+        }
+        // Ensure apiPath is always a string
+        return { owner, repo, ref, path: currentPath, apiPath: apiPath || '' };
+    } catch (e: any) {
+        console.error("Snaggle: Failed to parse GitHub URL:", e);
+        throw new Error(`Could not parse GitHub URL: ${urlString} - ${e?.message ?? 'Unknown reason'}`);
+    }
+}
+
+
+// --- File Tree Fetching and Display ---
+export async function displayFileTree(tab: chrome.tabs.Tab | null, url: string): Promise<void> {
+    const fileTreeContainer = getFileTreeContainer();
+    const downloadButton = getDownloadButton();
+    const errorContainer = getErrorContainerWithinTree();
+    const selectAllCheckbox = getSelectAllCheckbox();
+    if (!fileTreeContainer || !downloadButton || !selectAllCheckbox) { console.error("Snaggle: Cannot display file tree, critical UI elements missing."); return; }
+
+    fileTreeContainer.innerHTML = '<div class="loading-tree">Loading file tree...</div>';
+    if(errorContainer) errorContainer.textContent = '';
+    downloadButton.disabled = true;
+    selectAllCheckbox.checked = false;
+
+    try {
+        currentRepoInfo = parseRepoUrl(url);
+        console.log("Snaggle: Fetching tree for:", currentRepoInfo);
+        fileTreeData = await fetchFileTreeFromAPI(currentRepoInfo.owner, currentRepoInfo.repo, currentRepoInfo.ref, currentRepoInfo.apiPath);
+
+        if (fileTreeData.length === 0) {
+              fileTreeContainer.innerHTML = `<div class="error-message">${currentRepoInfo.apiPath ? `Directory '${currentRepoInfo.apiPath}' is empty or not found.` : 'Repository seems empty or inaccessible.'}</div>`;
+         } else {
+            renderFileTree(fileTreeData, fileTreeContainer);
+            downloadButton.disabled = true;
+         }
+    } catch (error: any) {
+        console.error("Snaggle: Failed to display file tree:", error);
+        if (errorContainer && !errorContainer.textContent) errorContainer.textContent = `Error: ${error?.message ?? 'Unknown error'}`;
+        fileTreeContainer.querySelector('.loading-tree')?.remove();
+        downloadButton.disabled = true;
+    }
+}
+
+
+// Fetch tree using GitHub API
+async function fetchFileTreeFromAPI(owner: string, repo: string, ref: string = 'HEAD', path: string = ''): Promise<GitHubFileItem[]> {
+    const apiUrl = `${GITHUB_API_BASE}${owner}/${repo}/contents/${path}?ref=${ref}`;
+    console.log("Snaggle: Fetching from API:", apiUrl);
+    const errorContainer = getErrorContainerWithinTree();
+    if(errorContainer) errorContainer.textContent = '';
+
+    try {
+        const response = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3+json' } });
+        if (!response.ok) {
+             let errorMsg = `GitHub API Error: ${response.status} ${response.statusText}`;
+             try { const errorData = await response.json(); if (errorData?.message) errorMsg += ` - ${errorData.message}`; } catch (e) {}
+             if (response.status === 404) errorMsg = `Repo, branch, or path not found (${path || 'root'}).`;
+             if (response.status === 403) errorMsg = `Access denied (Rate limit? Private repo?).`;
+            throw new Error(errorMsg);
+        }
+        const data: GitHubApiItem | GitHubApiItem[] = await response.json();
+        let itemsToProcess: GitHubApiItem[];
+        if (!Array.isArray(data)) {
+            if (typeof data === 'object' && data !== null && data.type === 'file') itemsToProcess = [data];
+            else throw new Error("Unexpected API response format.");
+        } else itemsToProcess = data;
+
+        const files: GitHubFileItem[] = itemsToProcess.map(item => ({
+            name: item.name, path: item.path,
+            // Map only file/dir to our specific type, treat others as file? Or filter? Let's map knowns
+            type: (item.type === 'file' || item.type === 'dir') ? item.type : 'file', // Default others to 'file'
+            sha: item.sha, url: item.html_url
+        })).filter(item => item.type === 'file' || item.type === 'dir'); // Optionally filter out non file/dir
+
+         // --- Corrected Sort Logic with Return Type ---
+         files.sort((a, b): number => {
+            const typeOrder = { 'dir': 0, 'file': 1 }; // Only sorting dir/file now
+            const typeA = typeOrder[a.type];
+            const typeB = typeOrder[b.type];
+            if (typeA !== typeB) return typeA - typeB; // Dirs first
+            return (a.name ?? "").localeCompare(b.name ?? "", undefined, { sensitivity: 'base' });
+        });
+         // --- End Corrected Sort Logic ---
+
+        return files;
+    } catch (error: any) {
+        console.error("Snaggle: GitHub API fetch error:", error);
+        if (errorContainer) { errorContainer.textContent = error?.message ?? 'Unknown API error'; }
+        throw error; // Re-throw
+    }
+}
+
+// Render file tree
+function renderFileTree(files: GitHubFileItem[], container: HTMLDivElement): void {
+    const list = document.createElement('ul');
+    files.forEach(item => {
+        const listItem = document.createElement('li');
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = item.path;
+        checkbox.dataset.type = item.type;
+        checkbox.dataset.name = item.name;
+
+        // Set class based on the known type (file or dir)
+        listItem.className = item.type === 'dir' ? 'folder' : 'file';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = item.name;
+
+        label.appendChild(checkbox);
+        label.appendChild(nameSpan);
+        listItem.appendChild(label);
+        list.appendChild(listItem);
+    });
+    container.innerHTML = ''; // Clear loading/previous
+    container.appendChild(list);
+}
+
+// --- Selection Handling ---
+export function getSelectedItems(): GitHubFileItem[] {
+    const container = getFileTreeContainer();
+    if (!container) return [];
+    const selectedCheckboxes = container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked:not(:disabled):not(#github-select-all)');
+    const items: GitHubFileItem[] = [];
+    selectedCheckboxes.forEach(checkbox => {
+        const type = checkbox.dataset.type;
+        // Check dataset properties are strings and match expected types
+        if ((type === 'file' || type === 'dir') && checkbox.dataset.name) {
+             items.push({ path: checkbox.value, type: type, name: checkbox.dataset.name });
+        }
+    });
+    return items;
+}
+export function toggleSelectAll(checked: boolean): void {
+    const container = getFileTreeContainer();
+    const downloadButton = getDownloadButton();
+     if (!container || !downloadButton) return;
+    const checkboxes = container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:not(:disabled):not(#github-select-all)');
+    checkboxes.forEach(checkbox => checkbox.checked = checked);
+    // Update button state based on whether any items *can* be selected and if the toggle is checking them
+    downloadButton.disabled = !checked && checkboxes.length > 0;
+}
+export function areAllSelected(): boolean {
+    const container = getFileTreeContainer();
+    if (!container) return false;
+    const allCheckableCheckboxes = container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:not(:disabled):not(#github-select-all)');
+    if (allCheckableCheckboxes.length === 0) return false;
+    const checkedCheckboxes = container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked:not(:disabled):not(#github-select-all)');
+    return allCheckableCheckboxes.length === checkedCheckboxes.length;
+}]]></content>
+    </file>
+    <file>
+      <filename>index.ts</filename>
+      <relPath>"Snaggle/src/popup/index.ts"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/src/popup/index.ts"</absPath>
+      <content><![CDATA[
+import './popup.css'; // Import CSS - Vite will handle this
+// Import module functions (path relative to src/popup/)
+import * as ChatExporter from '../modules/chat_exporter';
+import * as GitHubDownloader from '../modules/github_downloader';
+import * as GeneralExporter from '../modules/general_exporter';
+
+// Use declare for TurndownService loaded globally
+declare var TurndownService: any; // Using 'any' type for simplicity
+
+// Use chrome.* APIs with types
+const api = chrome;
+
+// --- Type Definitions ---
+interface GitHubFileItem { path: string; type: 'file' | 'dir'; name: string; }
+interface RepoInfo { owner: string; repo: string; ref: string; apiPath: string; }
+interface BackgroundMessage { action: 'downloadFile' | 'createAndDownloadZip'; url?: string; filename?: string; filesToFetch?: GitHubFileItem[]; repoInfo?: RepoInfo; }
+interface BackgroundResponse { success: boolean; error?: string; downloadId?: number; }
+interface ExtractionResultBase { error?: string; }
+interface ChatExtractionResult extends ExtractionResultBase { content: string; filename: string; requiresMarkdownConversion?: boolean; }
+interface PageExtractionResult extends ExtractionResultBase { content: string; requiresMarkdownConversion?: boolean; }
+type ScriptResultData = ChatExtractionResult | PageExtractionResult; // Combined type
+interface InjectionResult<T> { frameId: number; result: T | null; error?: unknown; }
+// --- End Type Definitions ---
+
+
+// DOM Elements
+const loadingDiv = document.getElementById('loading') as HTMLDivElement | null;
+// ... (other element getters remain the same)
+const errorMessageP = document.getElementById('error-message') as HTMLParagraphElement | null;
+
+// --- Utility Functions ---
+function showSection(sectionId: string): void { /* ... No change needed ... */ }
+function showError(message: string): void { /* ... No change needed ... */ }
+function showLoading(message: string = "Loading..."): void { /* ... No change needed ... */ }
+function getActiveTab(): Promise<chrome.tabs.Tab> { /* ... No change needed ... */ return Promise.reject("Dummy"); } // Added dummy reject
+function sanitizeFilename(name: string | undefined | null): string { /* ... No change needed ... */ return "untitled"; }
+
+// --- Main Logic ---
+document.addEventListener('DOMContentLoaded', async () => { /* ... No change needed ... */ });
+
+// --- Event Listener Setups ---
+function setupChatListeners(tab: chrome.tabs.Tab): void { /* ... No change needed ... */ }
+function setupGitHubListeners(tab: chrome.tabs.Tab, url: string): void { /* ... No change needed ... */ }
+function setupGeneralListeners(tab: chrome.tabs.Tab): void { /* ... No change needed ... */ }
+
+// --- Action Handlers ---
+
+async function handleChatExport(tab: chrome.tabs.Tab, format: 'txt' | 'md' | 'json'): Promise<void> {
+    // ... (Keep previous logging and logic, ensure result handling is correct) ...
+    console.log(`Snaggle Popup: Initiating chat export for format: ${format}, Tab ID: ${tab.id}`); // Log initiation
+    showLoading(`Exporting chat as ${format.toUpperCase()}...`);
+    if (!tab.id) { showError("Tab ID missing for chat export."); return; }
+    try {
+        const results = await api.scripting.executeScript<[typeof format], ChatExtractionResult>({ /* ... */ });
+        const injectionResult = results?.[0];
+        const resultData = injectionResult?.result;
+        console.log("Snaggle Popup: Chat executeScript result received:", injectionResult); // Log raw result
+
+        if (!resultData || resultData.error) {
+            console.error("Snaggle Popup: Chat script execution failed or returned error.", resultData?.error);
+            throw new Error(resultData?.error || "Chat script execution failed or returned no result.");
+        }
+        // ... rest of success logic ...
+         triggerDownload(resultData.content, sanitizeFilename(resultData.filename)); // Example simplification
+        if (loadingDiv) loadingDiv.textContent = "Download started!";
+        setTimeout(() => window.close(), 1500);
+
+    } catch (error: any) {
+        // Log the error caught by the popup's try/catch
+        console.error("Snaggle Popup: Error in handleChatExport:", error);
+        showError(`Snaggle: Chat export failed: ${error?.message ?? 'Unknown error'}`);
+        if (loadingDiv) loadingDiv.hidden = true;
+    }
+}
+
+async function handleGitHubDownload(tab: chrome.tabs.Tab, url: string): Promise<void> {
+    // ... (Keep previous logging and logic) ...
+    console.log("Snaggle Popup: Initiating GitHub download.");
+    // ... rest of function ...
+}
+
+async function handleGeneralExport(tab: chrome.tabs.Tab, format: 'pdf' | 'txt' | 'md'): Promise<void> {
+    // --- Added More Logging ---
+    console.log(`Snaggle Popup: Initiating general export for format: ${format}, Tab ID: ${tab.id}, URL: ${tab.url}`);
+    showLoading(`Exporting page as ${format.toUpperCase()}...`);
+    if (!tab.id) { showError("Tab ID missing for general export."); return; }
+
+    try {
+         const pageTitle = tab.title || 'page';
+         const baseFilename = sanitizeFilename(pageTitle);
+
+         if (format === 'pdf') {
+             console.log("Snaggle Popup: Requesting print dialog via script injection.");
+             showLoading("Opening Print Dialog...");
+             await api.scripting.executeScript({ target: { tabId: tab.id }, func: () => { window.print(); } });
+             console.log("Snaggle Popup: Print dialog script injected.");
+             setTimeout(() => window.close(), 500);
+             return;
+         } else if (format === 'txt' || format === 'md') {
+             console.log(`Snaggle Popup: Injecting script to extract ${format} content...`);
+             // Use wrapper func, expect PageExtractionResult
+             const results: InjectionResult<PageExtractionResult>[] = await api.scripting.executeScript({
+                 target: { tabId: tab.id },
+                 func: (fmt) => GeneralExporter.extractPageData(fmt),
+                 args: [format]
+             });
+
+             // --- Log the raw result from executeScript ---
+             console.log("Snaggle Popup: General executeScript result received:", results);
+
+             const injectionResult = results?.[0];
+             const extracted = injectionResult?.result; // PageExtractionResult | null
+
+             // --- Detailed check of the result ---
+             if (!injectionResult) {
+                 console.error("Snaggle Popup: executeScript returned no result array.");
+                 throw new Error("General script injection failed (no result array).");
+             }
+              if (extracted === null) {
+                 console.error("Snaggle Popup: Script execution returned null. Check target page console for errors.");
+                 // Try to get more info if available on the injectionResult itself (though often not detailed)
+                 const injectionError = (injectionResult as any).error;
+                 throw new Error(`General script execution failed in target frame.${injectionError ? ' Info: '+injectionError : ''}`);
+             }
+             if (extracted.error) {
+                 console.error("Snaggle Popup: Script execution returned an error property:", extracted.error);
+                 throw new Error(extracted.error);
+             }
+             // --- End Detailed Check ---
+
+             // Destructure from the result object (guaranteed non-null and no error property here)
+             console.log("Snaggle Popup: Script execution successful, processing content.");
+             let content = extracted.content;
+             const requiresMarkdownConversion = extracted.requiresMarkdownConversion;
+
+             if (format === 'md' && requiresMarkdownConversion) {
+                 if (typeof TurndownService !== 'undefined') {
+                     console.log("Snaggle Popup: Converting HTML to Markdown...");
+                     content = GeneralExporter.convertHtmlToMarkdown(content);
+                 } else { /* ... fallback log/handling ... */ }
+             }
+             const filename = `${baseFilename}.${format}`;
+             const mimeType = format === 'txt' ? 'text/plain;charset=utf-8' : 'text/markdown;charset=utf-8';
+             console.log(`Snaggle Popup: Triggering download for ${filename}`);
+             triggerDownload(content, filename, mimeType);
+             if (loadingDiv) loadingDiv.textContent = "Download started!";
+             setTimeout(() => window.close(), 1500);
+         } else {
+             // Should not be reachable
+             throw new Error(`Unsupported export format: ${format}`);
+         }
+     } catch (error: any) {
+         // --- Log the specific error caught by popup's try/catch ---
+         console.error("Snaggle Popup: Error in handleGeneralExport:", error);
+         showError(`Snaggle: General export failed: ${error?.message ?? 'Unknown error'}`);
+         if (loadingDiv) loadingDiv.hidden = true;
+     }
+ }
+
+// triggerDownload (Types added previously)
+function triggerDownload(content: string, filename: string, mimeType: string = 'text/plain;charset=utf-8'): void { /* ... No change needed ... */ }
+
+console.log("Snaggle Popup Script Loaded (Vite/TS)."); // Log popup load]]></content>
+    </file>
+    <file>
+      <filename>popup.css</filename>
+      <relPath>"Snaggle/src/popup/popup.css"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/src/popup/popup.css"</absPath>
+      <content><![CDATA[
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    /* Use a modern, readable font stack */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #282c34; /* Dark background for the body */
+    color: #abb2bf; /* Default slightly muted text color */
+    min-width: 340px; /* Minimum width */
+    max-width: 480px; /* Sensible max width */
+    overflow: hidden; /* Prevent body scrollbars */
+}
+
+/* --- Container --- */
+.container {
+    background-color: #282c34; /* Consistent dark background */
+    padding: 18px 20px;
+    max-height: 550px; /* Max height before scroll */
+    overflow-y: auto; /* Allow vertical scroll */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    border-radius: 0; /* Remove if not rendering reliably */
+    /* If you want a subtle border instead of shadow: */
+    /* border: 1px solid #3a3f4a; */
+}
+
+/* --- Header --- */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #3a3f4a; /* Subtle separator line */
+}
+
+header h1 {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #e6e6e6; /* Brighter white for title */
+    letter-spacing: 0.5px;
+}
+
+/* --- Initial Loading State --- */
+#loading {
+    padding: 40px 15px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #888e99; /* Muted color for loading */
+    font-style: italic;
+}
+
+/* --- Feature Sections --- */
+.feature-section {
+    margin-bottom: 25px; /* Space between sections */
+}
+
+.feature-section h2 {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #61afef; /* Use an accent color for headers */
+    margin-bottom: 12px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #3a3f4a;
+}
+
+.feature-section p {
+    margin-bottom: 15px;
+    color: #abb2bf;
+    font-size: 0.95em;
+}
+
+/* --- Buttons --- */
+.button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    /* Consistent button styling */
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.95em;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid #4b5263; /* Border color */
+    border-radius: 5px; /* Keep subtle rounding */
+    background-color: #3a3f4a; /* Button background */
+    color: #dcdfe4; /* Button text color */
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    min-width: 70px; /* Ensure buttons have minimum size */
+}
+
+button:hover:not(:disabled) {
+    background-color: #4b5263; /* Darker on hover */
+    border-color: #61afef; /* Accent border on hover */
+    color: #ffffff;
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.98); /* Press effect */
+    background-color: #434a58;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+}
+
+/* Prominent Download Button */
+.download-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #61afef; /* Accent color background */
+    border-color: #61afef;
+    color: #282c34; /* Dark text on light button */
+    font-weight: 600;
+}
+
+.download-button:hover:not(:disabled) {
+    background-color: #7ac0ff;
+    border-color: #7ac0ff;
+    color: #282c34;
+}
+
+.download-button:disabled {
+    background-color: #3a3f4a;
+    border-color: #4b5263;
+    color: #888e99;
+}
+
+/* --- GitHub File Tree --- */
+.file-tree {
+    max-height: 220px; /* Slightly taller */
+    overflow-y: auto;
+    border: 1px solid #3a3f4a;
+    border-radius: 4px; /* Subtle rounding */
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    background-color: #21252b; /* Slightly different dark bg */
+    font-size: 0.95em; /* Slightly larger tree font */
+    position: relative;
+    min-height: 50px;
+}
+
+.file-tree ul { list-style: none; padding-left: 0; margin: 0; } /* No extra indent */
+.file-tree li { margin-bottom: 4px; }
+.file-tree label { display: flex; align-items: center; cursor: pointer; user-select: none; padding: 3px 5px; border-radius: 3px; transition: background-color 0.15s ease; }
+.file-tree label:hover { background-color: rgba(255, 255, 255, 0.05); } /* Subtle hover */
+.file-tree input[type="checkbox"] { margin-right: 10px; cursor: pointer; flex-shrink: 0; }
+.file-tree span { word-break: break-all; color: #c8ccd4; } /* Brighter text in tree */
+
+/* Icons using ::before */
+.file-tree li::before {
+    font-family: system-ui; /* Ensure consistent icon rendering */
+    display: inline-block;
+    width: 1.5em; /* Width for alignment */
+    text-align: center;
+    margin-right: 5px;
+    color: #61afef; /* Accent color for icons */
+}
+.file-tree li.folder::before { content: '📁'; }
+.file-tree li.file::before { content: '📄'; }
+.file-tree li.symlink::before { content: '🔗'; opacity: 0.7; }
+.file-tree li.submodule::before { content: '📦'; opacity: 0.7; }
+
+/* Loading/Error Messages in Tree */
+.file-tree .loading-tree,
+.file-tree .error-message { padding: 15px; text-align: center; color: #888e99; font-style: italic; }
+.file-tree .error-message { color: #e06c75; font-style: normal; font-weight: 500; } /* Reddish error color */
+
+/* --- General Error Section --- */
+#error-section {
+    padding: 15px;
+    background-color: rgba(224, 108, 117, 0.1); /* Subtle red bg */
+    border: 1px solid #e06c75; /* Red border */
+    border-radius: 5px;
+    margin-top: 15px;
+}
+#error-section h2 { border-bottom: none; margin-bottom: 8px; color: #e06c75; font-size: 1.1em; text-align: center; }
+#error-section p { text-align: center; padding: 0; margin-bottom: 15px; color: #e48b93; white-space: pre-wrap; font-size: 0.9em; }
+#error-section button { display: block; margin: 10px auto 0 auto; }
+
+/* --- Unsupported Section --- */
+#unsupported-site { padding: 25px 15px; text-align: center; font-style: italic; color: #888e99; }
+#unsupported-site h2 { border-bottom: none; margin-bottom: 8px; color: #abb2bf; }
+
+/* --- Scrollbar Styling (Optional, for Webkit browsers like Chrome) --- */
+.container::-webkit-scrollbar,
+.file-tree::-webkit-scrollbar {
+  width: 8px;
+}
+.container::-webkit-scrollbar-track,
+.file-tree::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.container::-webkit-scrollbar-thumb,
+.file-tree::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.container::-webkit-scrollbar-thumb:hover,
+.file-tree::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}]]></content>
+    </file>
+    <file>
+      <filename>tsconfig.json</filename>
+      <relPath>"Snaggle/tsconfig.json"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/tsconfig.json"</absPath>
+      <content><![CDATA[
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"], // Ensure WebWorker for background
+    "outDir": "./dist",     // Output directly to dist (Vite handles subdirs)
+    "rootDir": "./src",     // Source root is src
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "sourceMap": true,      // Generate source maps
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "types": ["chrome-types"], // Use official chrome types
+    "isolatedModules": true   // Often recommended/required by Vite/bundlers
+  },
+  "include": ["src/**/*"],   // Compile everything in src
+  "exclude": ["node_modules", "dist"]
+}]]></content>
+    </file>
+    <file>
+      <filename>vite.config.ts</filename>
+      <relPath>"Snaggle/vite.config.ts"</relPath>
+      <absPath>"/Users/kadengruizenga/Developer/Projects/Snaggle/vite.config.ts"</absPath>
+      <content><![CDATA[
+import { defineConfig } from 'vite';
+import { crx, defineManifest } from '@crxjs/vite-plugin';
+import { resolve, dirname } from 'node:path'; // Need resolve and dirname again
+import { fileURLToPath } from 'node:url';    // Need this for __dirname
+
+// Calculate __dirname equivalent in ES module scope
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Define the manifest dynamically
+const manifest = defineManifest({
+  manifest_version: 3,
+  name: "Snaggle",
+  version: "1.0",
+  description: "Download content from specific websites via the extension popup.",
+  icons: {
+    "16": "icons/icon_16.png", // Path relative to dist output root
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  permissions: [
+    "activeTab",
+    "scripting",
+    "downloads"
+  ],
+  host_permissions: [
+     "*://api.github.com/*"
+  ],
+  background: {
+    service_worker: 'src/background/index.ts', // Source path for CRXJS
+    type: 'module',
+  },
+  action: {
+    // This still refers to the *output* name, which will be popup.html
+    default_popup: 'popup.html',
+    default_icon: {
+      "16": "icons/icon_16.png",
+      "48": "icons/icon_48.png"
+    }
+  },
+});
+
+// Vite configuration
+export default defineConfig(({ command }) => ({
+  // publicDir still points to 'public' for icons and vendor scripts
+  publicDir: 'public',
+  plugins: [
+    crx({ manifest }),
+  ],
+  server: {
+    port: 5173,
+    strictPort: true,
+    hmr: { port: 5173, },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: command === 'serve' ? 'inline' : false,
+    emptyOutDir: true,
+    rollupOptions: {
+      // --- ADD popup.html BACK as input, pointing to project root ---
+      input: {
+        // Use resolve to point to popup.html in the project root directory
+        popup: resolve(__dirname, 'popup.html'),
+      },
+      // -------------------------------------------------------------
+    },
+  }
+}));]]></content>
+    </file>
+  </fileContents>
+</concatSnaggle>

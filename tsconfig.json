@@ -1,36 +1,20 @@
 {
   "compilerOptions": {
-    /* Base Options: */
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"], // Ensure WebWorker for background
+    "outDir": "./dist",     // Output directly to dist (Vite handles subdirs)
+    "rootDir": "./src",     // Source root is src
+    "strict": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "target": "ES2017",
-    "allowJs": false,
+    "sourceMap": true,      // Generate source maps
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "module": "ES2020",
-
-    /* Strict Type Checking: */
-    "strict": true,
-    "noImplicitAny": true, // Keep this true for better type safety
-    "strictNullChecks": true,
-
-    /* Module/Output Options: */
-    "outDir": "./dist/js",
-    "rootDir": "./js",
-    "sourceMap": true,
-
-    /* Library Options: */
-    // Added "WebWorker" to allow globals like importScripts
-    "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
-
-    /* Advanced: */
-    "forceConsistentCasingInFileNames": true
+    "types": ["chrome-types"], // Use official chrome types
+    "isolatedModules": true   // Often recommended/required by Vite/bundlers
   },
-  "include": [
-    "js/**/*.ts" // Include all .ts files within the js directory
-  ],
-  "exclude": [
-    "node_modules", // Exclude node_modules
-    "dist" // Exclude the output directory
-  ]
+  "include": ["src/**/*"],   // Compile everything in src
+  "exclude": ["node_modules", "dist"]
 }

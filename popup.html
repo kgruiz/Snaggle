@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snaggle</title>
-    <link rel="stylesheet" href="css/popup.css" />
+    <!-- Vite will inject the processed CSS link here -->
   </head>
   <body>
     <div class="container">
@@ -12,6 +12,7 @@
         <h1>Snaggle</h1>
       </header>
       <main id="content">
+        <!-- Loading/Error/Feature Sections remain exactly the same HTML structure -->
         <div id="loading" hidden>Detecting site...</div>
         <div id="chat-exporter" class="feature-section" hidden>
           <h2>Chat Exporter</h2>
@@ -64,7 +65,9 @@
         </div>
       </main>
     </div>
-    <script src="dist/js/vendor/turndown.js"></script>
-    <script src="dist/js/popup.js" type="module"></script>
+    <!-- Load vendor script from public directory (copied by Vite) -->
+    <script src="/vendor/turndown.js"></script>
+    <!-- Vite injects the main popup script -->
+    <script type="module" src="/src/popup/index.ts"></script>
   </body>
 </html>

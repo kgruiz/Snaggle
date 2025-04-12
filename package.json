@@ -3,24 +3,35 @@
     "version": "1.0.0",
     "description": "Download content from specific websites via the extension popup.",
     "private": true,
-    "scripts": {
-        "copy-vendor": "mkdir -p dist/js/vendor && cp js/vendor/*.js dist/js/vendor/",
-        "build": "rm -rf dist && tsc && npm run copy-vendor",
-        "watch": "tsc --watch"
+    "type": "module",
+    "scripts": 
+    {
+        "dev": "vite",
+        "copy-vendor": "mkdir -p public/vendor && cp node_modules/jszip/dist/jszip.min.js public/vendor/ && cp node_modules/turndown/dist/turndown.js public/vendor/",
+        "build": "npm run copy-vendor && vite build",
+        "preview": "vite preview"
     },
-    "keywords": [
+    "keywords": 
+    [
         "chrome",
         "extension",
         "downloader",
         "export",
-        "typescript"
+        "typescript",
+        "vite"
     ],
     "author": "Kaden Gruizenga",
-    "devDependencies": {
-        "@types/chrome": "^0.0.268",
-        "@types/turndown": "^5.0.4",
+    "dependencies": 
+    {
         "jszip": "^3.10.1",
-        "turndown": "^7.1.3",
-        "typescript": "^5.4.5"
+        "turndown": "^7.2.0"
+    },
+    "devDependencies": 
+    {
+        "@crxjs/vite-plugin": "^2.0.0-beta.32",
+        "@types/node": "^22.14.1",
+        "chrome-types": "^0.1.347",
+        "typescript": "^5.8.3",
+        "vite": "^6.2.6"
     }
 }

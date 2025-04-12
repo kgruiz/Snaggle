@@ -1,0 +1,216 @@
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    /* Use a modern, readable font stack */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #282c34; /* Dark background for the body */
+    color: #abb2bf; /* Default slightly muted text color */
+    min-width: 340px; /* Minimum width */
+    max-width: 480px; /* Sensible max width */
+    overflow: hidden; /* Prevent body scrollbars */
+}
+
+/* --- Container --- */
+.container {
+    background-color: #282c34; /* Consistent dark background */
+    padding: 18px 20px;
+    max-height: 550px; /* Max height before scroll */
+    overflow-y: auto; /* Allow vertical scroll */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    border-radius: 0; /* Remove if not rendering reliably */
+    /* If you want a subtle border instead of shadow: */
+    /* border: 1px solid #3a3f4a; */
+}
+
+/* --- Header --- */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #3a3f4a; /* Subtle separator line */
+}
+
+header h1 {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #e6e6e6; /* Brighter white for title */
+    letter-spacing: 0.5px;
+}
+
+/* --- Initial Loading State --- */
+#loading {
+    padding: 40px 15px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #888e99; /* Muted color for loading */
+    font-style: italic;
+}
+
+/* --- Feature Sections --- */
+.feature-section {
+    margin-bottom: 25px; /* Space between sections */
+}
+
+.feature-section h2 {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #61afef; /* Use an accent color for headers */
+    margin-bottom: 12px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #3a3f4a;
+}
+
+.feature-section p {
+    margin-bottom: 15px;
+    color: #abb2bf;
+    font-size: 0.95em;
+}
+
+/* --- Buttons --- */
+.button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    /* Consistent button styling */
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.95em;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid #4b5263; /* Border color */
+    border-radius: 5px; /* Keep subtle rounding */
+    background-color: #3a3f4a; /* Button background */
+    color: #dcdfe4; /* Button text color */
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    min-width: 70px; /* Ensure buttons have minimum size */
+}
+
+button:hover:not(:disabled) {
+    background-color: #4b5263; /* Darker on hover */
+    border-color: #61afef; /* Accent border on hover */
+    color: #ffffff;
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.98); /* Press effect */
+    background-color: #434a58;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+}
+
+/* Prominent Download Button */
+.download-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #61afef; /* Accent color background */
+    border-color: #61afef;
+    color: #282c34; /* Dark text on light button */
+    font-weight: 600;
+}
+
+.download-button:hover:not(:disabled) {
+    background-color: #7ac0ff;
+    border-color: #7ac0ff;
+    color: #282c34;
+}
+
+.download-button:disabled {
+    background-color: #3a3f4a;
+    border-color: #4b5263;
+    color: #888e99;
+}
+
+/* --- GitHub File Tree --- */
+.file-tree {
+    max-height: 220px; /* Slightly taller */
+    overflow-y: auto;
+    border: 1px solid #3a3f4a;
+    border-radius: 4px; /* Subtle rounding */
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    background-color: #21252b; /* Slightly different dark bg */
+    font-size: 0.95em; /* Slightly larger tree font */
+    position: relative;
+    min-height: 50px;
+}
+
+.file-tree ul { list-style: none; padding-left: 0; margin: 0; } /* No extra indent */
+.file-tree li { margin-bottom: 4px; }
+.file-tree label { display: flex; align-items: center; cursor: pointer; user-select: none; padding: 3px 5px; border-radius: 3px; transition: background-color 0.15s ease; }
+.file-tree label:hover { background-color: rgba(255, 255, 255, 0.05); } /* Subtle hover */
+.file-tree input[type="checkbox"] { margin-right: 10px; cursor: pointer; flex-shrink: 0; }
+.file-tree span { word-break: break-all; color: #c8ccd4; } /* Brighter text in tree */
+
+/* Icons using ::before */
+.file-tree li::before {
+    font-family: system-ui; /* Ensure consistent icon rendering */
+    display: inline-block;
+    width: 1.5em; /* Width for alignment */
+    text-align: center;
+    margin-right: 5px;
+    color: #61afef; /* Accent color for icons */
+}
+.file-tree li.folder::before { content: '📁'; }
+.file-tree li.file::before { content: '📄'; }
+.file-tree li.symlink::before { content: '🔗'; opacity: 0.7; }
+.file-tree li.submodule::before { content: '📦'; opacity: 0.7; }
+
+/* Loading/Error Messages in Tree */
+.file-tree .loading-tree,
+.file-tree .error-message { padding: 15px; text-align: center; color: #888e99; font-style: italic; }
+.file-tree .error-message { color: #e06c75; font-style: normal; font-weight: 500; } /* Reddish error color */
+
+/* --- General Error Section --- */
+#error-section {
+    padding: 15px;
+    background-color: rgba(224, 108, 117, 0.1); /* Subtle red bg */
+    border: 1px solid #e06c75; /* Red border */
+    border-radius: 5px;
+    margin-top: 15px;
+}
+#error-section h2 { border-bottom: none; margin-bottom: 8px; color: #e06c75; font-size: 1.1em; text-align: center; }
+#error-section p { text-align: center; padding: 0; margin-bottom: 15px; color: #e48b93; white-space: pre-wrap; font-size: 0.9em; }
+#error-section button { display: block; margin: 10px auto 0 auto; }
+
+/* --- Unsupported Section --- */
+#unsupported-site { padding: 25px 15px; text-align: center; font-style: italic; color: #888e99; }
+#unsupported-site h2 { border-bottom: none; margin-bottom: 8px; color: #abb2bf; }
+
+/* --- Scrollbar Styling (Optional, for Webkit browsers like Chrome) --- */
+.container::-webkit-scrollbar,
+.file-tree::-webkit-scrollbar {
+  width: 8px;
+}
+.container::-webkit-scrollbar-track,
+.file-tree::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.container::-webkit-scrollbar-thumb,
+.file-tree::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.container::-webkit-scrollbar-thumb:hover,
+.file-tree::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
