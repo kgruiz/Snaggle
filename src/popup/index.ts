@@ -34,19 +34,72 @@ const errorSection = document.getElementById('error-section') as HTMLDivElement 
 const errorMessageP = document.getElementById('error-message') as HTMLParagraphElement | null;
 
 // --- Utility Functions --- (No changes needed)
-function showSection(sectionId: string): void { /* ... */ }
-function showError(message: string): void { /* ... */ }
-function showLoading(message: string = "Loading..."): void { /* ... */ }
-function getActiveTab(): Promise<chrome.tabs.Tab> { /* ... */ return Promise.reject("Dummy"); }
-function sanitizeFilename(name: string | undefined | null): string { /* ... */ return "untitled"; }
+function showSection(sectionId: string): void {
+    console.log(`Snaggle Popup: Attempting to show section: ${sectionId}`);
+    if (loadingDiv) loadingDiv.hidden = true;
+    if (chatSection) chatSection.hidden = true;
+    if (githubSection) githubSection.hidden = true;
+    if (generalSection) generalSection.hidden = true;
+    if (unsupportedSection) unsupportedSection.hidden = true;
+    if (errorSection) errorSection.hidden = true;
+    const section = document.getElementById(sectionId);
+    if (section) { section.hidden = false; console.log(`Snaggle Popup: Successfully displayed section: ${sectionId}`); }
+    else { showError(`Internal error: Section ID "${sectionId}" not found.`); }
+}
+function showError(message: string): void {
+    console.error("Snaggle Popup: Showing error - ", message);
+    if (errorMessageP) errorMessageP.textContent = message;
+    const errSect = document.getElementById('error-section');
+    if (errSect) errSect.hidden = false; else console.error("Snaggle Error: Error section element not found.");
+    if (loadingDiv) loadingDiv.hidden = true;
+}
+function showLoading(message: string = "Loading..."): void {
+    console.log("Snaggle Popup: Showing loading state:", message);
+    if (loadingDiv) {
+        loadingDiv.textContent = message; loadingDiv.hidden = false;
+        if (chatSection) chatSection.hidden = true; if (githubSection) githubSection.hidden = true; if (generalSection) generalSection.hidden = true; if (unsupportedSection) unsupportedSection.hidden = true; if (errorSection) errorSection.hidden = true;
+    } else { console.error("Snaggle Error: Loading div element not found."); }
+}
+function getActiveTab(): Promise<chrome.tabs.Tab> {
+    console.log("Snaggle Popup: Calling api.tabs.query...");
+    return api.tabs.query({ active: true, currentWindow: true })
+        .then(tabs => {
+            console.log("Snaggle Popup: api.tabs.query result:", tabs);
+            if (tabs?.[0]?.id && tabs?.[0]?.url) { console.log("Snaggle Popup: Active tab found:", tabs[0]); return tabs[0]; }
+            if (!tabs || tabs.length === 0) console.error("Snaggle Popup: api.tabs.query returned no tabs."); else if (!tabs[0].id) console.error("Snaggle Popup: Active tab missing ID.", tabs[0]); else if (!tabs[0].url) console.error("Snaggle Popup: Active tab missing URL.", tabs[0]); else console.error("Snaggle Popup: api.tabs.query returned invalid tab data.", tabs[0]);
+            throw new Error("Could not get valid active tab information.");
+        })
+        .catch(error => { console.error("Snaggle Popup: Error during api.tabs.query:", error); throw error; });
+}
+function sanitizeFilename(name: string | undefined | null): string {
+    if (!name) return "untitled"; const reserved = /[<>:"/\\|?*\u0000-\u001F]/g; const whitespaceAndDots = /[\s._]+/g; const trimEdges = /^[._\s]+|[._\s]+$/g;
+    let sanitized = name.replace(reserved, '_').replace(whitespaceAndDots, '_').replace(trimEdges, ''); return (sanitized || "untitled").substring(0, 150);
+}
 
 // --- Main Logic --- (No changes needed)
-document.addEventListener('DOMContentLoaded', async () => { /* ... */ });
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("Snaggle Popup: DOMContentLoaded event fired."); showLoading("Detecting site..."); let activeTab: chrome.tabs.Tab | undefined;
+    try {
+        console.log("Snaggle Popup: Entering main try block."); console.log("Snaggle Popup: About to call getActiveTab()..."); activeTab = await getActiveTab(); console.log("Snaggle Popup: getActiveTab() resolved successfully:", activeTab);
+        if (!activeTab?.id || !activeTab?.url) { console.error("Snaggle Popup: ActiveTab became invalid after await?"); throw new Error("Lost active tab information."); }
+        const url = activeTab.url; console.log("Snaggle Popup: Checking URL:", url);
+        if (!url.startsWith('http:') && !url.startsWith('https:') && !url.startsWith('file:')) { console.log(`Snaggle Popup: URL protocol (${url.substring(0,10)}...) not supported.`); showError(`Cannot operate on this page protocol.`); }
+        else {
+            console.log("Snaggle Popup: Determining site type..."); const isChat = ChatExporter.isChatSite(url); const isGitHub = GitHubDownloader.isGitHubRepoPage(url); const isGeneral = GeneralExporter.isGeneralSite(url); console.log(`Snaggle Popup: Site Type Checks - isChat: ${isChat}, isGitHub: ${isGitHub}, isGeneral: ${isGeneral}`);
+            if (isChat) { console.log("Snaggle Popup: Detected Chat Site..."); setupChatListeners(activeTab); showSection('chat-exporter'); console.log("Snaggle Popup: Chat setup complete."); }
+            else if (isGitHub) { console.log("Snaggle Popup: Detected GitHub Repo..."); setupGitHubListeners(activeTab, url); showSection('github-downloader'); console.log("Snaggle Popup: GitHub setup complete."); }
+            else if (isGeneral) { console.log("Snaggle Popup: Detected General Site..."); setupGeneralListeners(activeTab); showSection('general-exporter'); console.log("Snaggle Popup: General setup complete."); }
+            else { console.log("Snaggle Popup: Site type not supported (failed all checks)."); showSection('unsupported-site'); }
+        }
+        console.log("Snaggle Popup: Exiting main try block normally.");
+    } catch (error: any) { console.error("Snaggle Popup: Error caught in DOMContentLoaded handler:", error); showError(`Snaggle: Initialization failed: ${error?.message ?? 'Unknown error'}`); }
+    finally { console.log("Snaggle Popup: Reached finally block."); }
+});
 
 // --- Event Listener Setups --- (No changes needed)
-function setupChatListeners(tab: chrome.tabs.Tab): void { /* ... */ }
-function setupGitHubListeners(tab: chrome.tabs.Tab, url: string): void { /* ... */ }
-function setupGeneralListeners(tab: chrome.tabs.Tab): void { /* ... */ }
+function setupChatListeners(tab: chrome.tabs.Tab): void { document.getElementById('chat-txt')?.addEventListener('click', () => handleChatExport(tab, 'txt')); document.getElementById('chat-md')?.addEventListener('click', () => handleChatExport(tab, 'md')); document.getElementById('chat-json')?.addEventListener('click', () => handleChatExport(tab, 'json')); }
+function setupGitHubListeners(tab: chrome.tabs.Tab, url: string): void { const downloadButton = document.getElementById('github-download-zip') as HTMLButtonElement | null; const selectAllCheckbox = document.getElementById('github-select-all') as HTMLInputElement | null; const fileTreeContainer = document.getElementById('github-file-tree') as HTMLDivElement | null; if(!downloadButton || !selectAllCheckbox || !fileTreeContainer) { showError("GitHub UI elements missing."); return; } downloadButton.addEventListener('click', () => handleGitHubDownload(tab, url)); selectAllCheckbox.addEventListener('change', (event: Event) => { GitHubDownloader.toggleSelectAll((event.target as HTMLInputElement).checked); downloadButton.disabled = GitHubDownloader.getSelectedItems().length === 0; }); fileTreeContainer.addEventListener('change', (event: Event) => { const target = event.target as HTMLElement | null; if (target?.matches('input[type="checkbox"]') && target !== selectAllCheckbox) { const anySelected = GitHubDownloader.getSelectedItems().length > 0; downloadButton.disabled = !anySelected; selectAllCheckbox.checked = anySelected && GitHubDownloader.areAllSelected(); } }); GitHubDownloader.displayFileTree(tab, url); }
+function setupGeneralListeners(tab: chrome.tabs.Tab): void { document.getElementById('general-pdf')?.addEventListener('click', () => handleGeneralExport(tab, 'pdf')); document.getElementById('general-md')?.addEventListener('click', () => handleGeneralExport(tab, 'md')); document.getElementById('general-txt')?.addEventListener('click', () => handleGeneralExport(tab, 'txt')); }
 
 // --- Action Handlers ---
 
@@ -71,7 +124,14 @@ async function handleChatExport(tab: chrome.tabs.Tab, format: 'txt' | 'md' | 'js
 
         const { content, filename, requiresMarkdownConversion } = resultData;
         let finalContent = content;
-        if (format === 'md' && requiresMarkdownConversion) { /* ... turndown logic ... */ }
+        if (format === 'md' && requiresMarkdownConversion) {
+             if (typeof TurndownService !== 'undefined') {
+                finalContent = GeneralExporter.convertHtmlToMarkdown(content);
+             } else {
+                 console.warn("Snaggle: Turndown unavailable for chat MD.");
+                 finalContent = "<!-- Turndown library missing -->\n\n" + content;
+             }
+        }
 
         triggerDownload(finalContent, sanitizeFilename(filename));
         if (loadingDiv) loadingDiv.textContent = "Download started!";
@@ -87,45 +147,23 @@ async function handleChatExport(tab: chrome.tabs.Tab, format: 'txt' | 'md' | 'js
 async function handleGitHubDownload(tab: chrome.tabs.Tab, url: string): Promise<void> {
      const downloadButton = document.getElementById('github-download-zip') as HTMLButtonElement | null;
      if (!downloadButton) return;
-
      const selectedItems = GitHubDownloader.getSelectedItems();
      if (selectedItems.length === 0) { alert("Please select files/folders."); return; }
-     downloadButton.disabled = true;
-     downloadButton.textContent = 'Zipping...';
-     showLoading("Preparing download...");
+     downloadButton.disabled = true; downloadButton.textContent = 'Zipping...'; showLoading("Preparing download...");
      try {
          const repoInfo = GitHubDownloader.parseRepoUrl(url);
          let baseName = repoInfo.repo + (selectedItems.length === 1 ? '-' + sanitizeFilename(selectedItems[0].name) : '-selection');
          const filename = sanitizeFilename(`${baseName}-${Date.now()}.zip`);
-
-         // Corrected sendMessage call (no generics)
-         const response = await api.runtime.sendMessage({
-             action: 'createAndDownloadZip',
-             filesToFetch: selectedItems,
-             repoInfo: repoInfo,
-             filename: filename
-         });
-
-         // Assert the type of the response received
+         const response = await api.runtime.sendMessage({ action: 'createAndDownloadZip', filesToFetch: selectedItems, repoInfo: repoInfo, filename: filename });
          const typedResponse = response as BackgroundResponse | undefined;
-
-         // Check response success based on promise resolution and response content
          if (typedResponse?.success) {
-             console.log('Snaggle: ZIP download initiated.');
-             if (loadingDiv) loadingDiv.textContent = "Download started!";
-             setTimeout(() => window.close(), 1500);
-         } else {
-             // If promise resolved but success wasn't true, use the error from response
-             // Removed api.runtime.lastError check
-             throw new Error(typedResponse?.error || 'Unknown error during ZIP creation (promise resolved).');
-         }
-     } catch (error: any) { // Catch promise rejections or thrown errors
+             console.log('Snaggle: ZIP download initiated.'); if (loadingDiv) loadingDiv.textContent = "Download started!"; setTimeout(() => window.close(), 1500);
+         } else { throw new Error(typedResponse?.error || 'Unknown error during ZIP creation (promise resolved).'); }
+     } catch (error: any) {
          showError(`Snaggle: GitHub download error: ${error?.message ?? 'Unknown error'}`);
          const currentDownloadButton = document.getElementById('github-download-zip') as HTMLButtonElement | null;
-         if(currentDownloadButton) { /* ... reset button ... */ }
-     } finally {
-        if (!window.closed && loadingDiv) { loadingDiv.hidden = true; }
-     }
+         if(currentDownloadButton) { currentDownloadButton.disabled = GitHubDownloader.getSelectedItems().length === 0; currentDownloadButton.textContent = 'Download Selected (.zip)'; }
+     } finally { if (!window.closed && loadingDiv) { loadingDiv.hidden = true; } }
  }
 
 async function handleGeneralExport(tab: chrome.tabs.Tab, format: 'pdf' | 'txt' | 'md'): Promise<void> {
@@ -136,14 +174,20 @@ async function handleGeneralExport(tab: chrome.tabs.Tab, format: 'pdf' | 'txt' |
          const pageTitle = tab.title || 'page';
          const baseFilename = sanitizeFilename(pageTitle);
 
-         if (format === 'pdf') { /* ... pdf logic ... */ return; }
-         else if (format === 'txt' || format === 'md') {
+         if (format === 'pdf') {
+             console.log("Snaggle Popup: Requesting print dialog via script injection."); showLoading("Opening Print Dialog...");
+             await api.scripting.executeScript({ target: { tabId: tab.id }, func: () => { window.print(); } });
+             console.log("Snaggle Popup: Print dialog script injected."); setTimeout(() => window.close(), 500); return;
+         } else if (format === 'txt' || format === 'md') {
              console.log(`Snaggle Popup: Injecting script FILE to extract ${format} content...`);
-             // Using file injection
+             // --- Corrected executeScript call using ABSOLUTE path from root ---
              const results: ScriptInjectionResults = await api.scripting.executeScript({
                  target: { tabId: tab.id },
-                 files: ['src/content/extractGeneralData.ts'] // Compiled path resolved by Vite/CRXJS
+                 // Path MUST be relative to the root of the built extension (dist folder)
+                 // Start with "/" to indicate root.
+                 files: ['/src/content/extractGeneralData.js'] // <-- Added leading slash
              });
+             // --- End Correction ---
 
              console.log("Snaggle Popup: General executeScript result received:", results);
              const injectionResult = results?.[0];
@@ -158,13 +202,16 @@ async function handleGeneralExport(tab: chrome.tabs.Tab, format: 'pdf' | 'txt' |
              let content = extracted.content;
              const requiresMarkdownConversion = extracted.requiresMarkdownConversion;
 
-             if (requiresMarkdownConversion) { // Check flag even if format was hardcoded in script
+             if (requiresMarkdownConversion) {
                  if (typeof TurndownService !== 'undefined') {
                      console.log("Snaggle Popup: Converting HTML to Markdown...");
                      content = GeneralExporter.convertHtmlToMarkdown(content);
-                 } else { /* ... fallback ... */ }
+                 } else {
+                      console.warn("Snaggle: Turndown unavailable for general MD.");
+                      content = "<!-- Turndown library missing -->\n\n" + content;
+                 }
              }
-             const filename = `${baseFilename}.${format}`; // Use requested format for filename
+             const filename = `${baseFilename}.${format}`;
              const mimeType = format === 'txt' ? 'text/plain;charset=utf-8' : 'text/markdown;charset=utf-8';
              console.log(`Snaggle Popup: Triggering download for ${filename}`);
              triggerDownload(content, filename, mimeType);
@@ -178,36 +225,28 @@ async function handleGeneralExport(tab: chrome.tabs.Tab, format: 'pdf' | 'txt' |
      }
  }
 
-// triggerDownload
+// triggerDownload (No changes needed)
 function triggerDownload(content: string, filename: string, mimeType: string = 'text/plain;charset=utf-8'): void {
     try {
         const blob = new Blob([content], { type: mimeType });
         const url = URL.createObjectURL(blob);
-        // Corrected sendMessage call (no generics)
-        api.runtime.sendMessage({
-            action: 'downloadFile', url: url, filename: filename
-        })
+        api.runtime.sendMessage({ action: 'downloadFile', url: url, filename: filename })
         .then(response => {
-            // Assert the type of the response received
             const typedResponse = response as BackgroundResponse | undefined;
-
-            // Check response success based on promise resolution and response content
             if (typedResponse?.success) {
                 console.log(`Snaggle: Download ${filename} initiated via background.`);
                 setTimeout(() => URL.revokeObjectURL(url), 60000);
             } else {
-                // If promise resolved but success wasn't true, use the error from response
-                // Removed api.runtime.lastError check here
                 showError(`Download failed: ${typedResponse?.error || 'Unknown error (promise resolved)'}`);
-                URL.revokeObjectURL(url); // Clean up immediately on failure
+                URL.revokeObjectURL(url);
             }
-        }).catch((err: Error) => { // Catch promise rejections
+        }).catch((err: Error) => {
             showError(`Snaggle: Error sending download message: ${err.message}`);
             URL.revokeObjectURL(url);
         });
-    } catch(error: any) { // Catch Blob creation errors
+    } catch(error: any) {
          showError(`Snaggle: Failed to prepare download content: ${error?.message ?? 'Unknown error'}`);
     }
 }
 
-console.log("Snaggle Popup Script Loaded (Vite/TS).");
+console.log("Snaggle Popup Script Loaded (Vite/TS - Final).");
