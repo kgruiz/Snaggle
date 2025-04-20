@@ -11,36 +11,70 @@
 
 html,
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
-  font-size: 14px;
-  line-height: 1.5;
-  background-color: #282c34; /* Dark background */
-  color: #abb2bf; /* Default text color */
-  min-width: 340px; /* Minimum width */
-  max-width: 480px; /* Sensible max width */
-  overflow: hidden; /* Prevent body scrollbars if content fits */
+  /* Keep page specific styles here if any, but popup styles go below */
 }
 
-/* --- Container --- */
-.container {
-  background-color: #282c34;
-  padding: 18px 20px;
+/* --- Floating Container Wrapper --- */
+/* This is the new div injected by the content script to wrap the popup content */
+#snaggle-popup-container {
+  position: fixed; /* Position relative to the viewport */
+  top: 20px; /* Distance from top */
+  right: 20px; /* Distance from right */
+  z-index: 10000; /* Ensure it's on top of most page content */
+  pointer-events: none; /* Default to ignore pointer events when hidden */
+  display: none; /* Initially hidden */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol"; /* Apply font family here */
+  font-size: 14px; /* Apply base font size here */
+}
+
+#snaggle-popup-container.visible {
+  display: block; /* Show when the class is added by the content script */
+  pointer-events: auto; /* Allow pointer events when visible */
+}
+
+/* Add a semi-transparent overlay for modal-like feel (optional) */
+/* Uncomment if you want the rest of the page to be dimmed/unclickable when popup is open */
+/*
+#snaggle-popup-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1; // Behind the popup content
+    pointer-events: auto; // Capture clicks outside the popup
+}
+*/
+
+/* --- Inner Content Container --- */
+/* Styles that were on .container now apply to the inner injected content */
+#snaggle-popup-container .container {
+  background-color: #282c34; /* Dark background */
+  color: #abb2bf; /* Default text color */
+  width: 360px; /* Fixed width for the popup content area */
   max-height: 550px; /* Max height before scroll */
   overflow-y: auto; /* Allow vertical scroll */
   overflow-x: hidden; /* Prevent horizontal scroll */
+  border-radius: 8px; /* Rounded corners for the popup box */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Add shadow */
+  padding: 18px 20px; /* Padding inside the box */
 }
 
 /* --- Header --- */
-header {
+#snaggle-popup-container header {
+  /* Target header inside the container */
   text-align: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #3a3f4a; /* Subtle separator */
 }
 
-header h1 {
+#snaggle-popup-container header h1 {
+  /* Target h1 inside header */
   font-size: 1.6em;
   font-weight: 600;
   color: #e6e6e6; /* Brighter title */
@@ -48,7 +82,8 @@ header h1 {
 }
 
 /* --- Initial Loading State --- */
-#loading {
+#snaggle-popup-container #loading {
+  /* Target loading div */
   padding: 40px 15px;
   text-align: center;
   font-size: 1.1em;
@@ -57,11 +92,13 @@ header h1 {
 }
 
 /* --- Feature Sections --- */
-.feature-section {
+#snaggle-popup-container .feature-section {
+  /* Target sections */
   margin-bottom: 25px; /* Space between sections */
 }
 
-.feature-section h2 {
+#snaggle-popup-container .feature-section h2 {
+  /* Target section headers */
   font-size: 1.2em;
   font-weight: 500;
   color: #61afef; /* Accent color for headers */
@@ -70,14 +107,16 @@ header h1 {
   border-bottom: 1px solid #3a3f4a;
 }
 
-.feature-section p {
+#snaggle-popup-container .feature-section p {
+  /* Target section paragraphs */
   margin-bottom: 15px;
   color: #abb2bf;
   font-size: 0.95em;
 }
 
 /* --- Buttons --- */
-.button-group {
+#snaggle-popup-container .button-group {
+  /* Target button groups */
   display: flex;
   gap: 12px; /* Space between buttons */
   justify-content: center; /* Center buttons horizontally */
@@ -85,7 +124,8 @@ header h1 {
   margin-top: 10px; /* Consistent top margin */
 }
 
-button {
+#snaggle-popup-container button {
+  /* Target buttons */
   display: inline-block;
   padding: 8px 15px;
   font-size: 0.95em;
@@ -101,29 +141,31 @@ button {
   min-width: 70px; /* Ensure buttons have minimum size */
 }
 
-button:hover:not(:disabled) {
+#snaggle-popup-container button:hover:not(:disabled) {
   background-color: #4b5263; /* Darker on hover */
   border-color: #61afef; /* Accent border on hover */
   color: #ffffff;
 }
 
-button:active:not(:disabled) {
+#snaggle-popup-container button:active:not(:disabled) {
   transform: scale(0.98); /* Press effect */
   background-color: #434a58;
 }
 
-button:disabled {
+#snaggle-popup-container button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
   transform: none;
 }
 
 /* --- GitHub Specific Styles --- */
-.github-controls {
+#snaggle-popup-container .github-controls {
+  /* Target github controls div */
   margin-bottom: 8px;
   text-align: left; /* Align select-all to the left */
 }
-.select-all-label {
+#snaggle-popup-container .select-all-label {
+  /* Target select-all label */
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -131,12 +173,14 @@ button:disabled {
   font-size: 0.9em;
   color: #abb2bf;
 }
-.select-all-label input[type="checkbox"] {
+#snaggle-popup-container .select-all-label input[type="checkbox"] {
+  /* Target checkbox */
   margin-right: 6px;
   cursor: pointer;
   /* Optional: Style checkbox appearance if needed */
 }
-.file-tree {
+#snaggle-popup-container .file-tree {
+  /* Target file-tree container */
   max-height: 200px; /* Adjust height as needed */
   overflow-y: auto;
   border: 1px solid #3a3f4a;
@@ -148,15 +192,18 @@ button:disabled {
   position: relative;
   min-height: 50px; /* Ensure it has some height even when empty/loading */
 }
-.file-tree ul {
+#snaggle-popup-container .file-tree ul {
+  /* Target ul in file-tree */
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-.file-tree li {
+#snaggle-popup-container .file-tree li {
+  /* Target li in file-tree */
   margin-bottom: 4px;
 }
-.file-tree label {
+#snaggle-popup-container .file-tree label {
+  /* Target label in file-tree */
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -165,20 +212,24 @@ button:disabled {
   border-radius: 3px;
   transition: background-color 0.15s ease;
 }
-.file-tree label:hover {
+#snaggle-popup-container .file-tree label:hover {
+  /* Target label hover */
   background-color: rgba(255, 255, 255, 0.05);
 } /* Subtle hover */
-.file-tree input[type="checkbox"] {
+#snaggle-popup-container .file-tree input[type="checkbox"] {
+  /* Target checkbox in file-tree */
   margin-right: 10px;
   cursor: pointer;
   flex-shrink: 0;
 }
-.file-tree span {
+#snaggle-popup-container .file-tree span {
+  /* Target span in file-tree */
   word-break: break-all;
   color: #c8ccd4;
 } /* Brighter text in tree */
 /* Icons using ::before */
-.file-tree li::before {
+#snaggle-popup-container .file-tree li::before {
+  /* Target li::before in file-tree */
   font-family: system-ui, sans-serif; /* Ensure consistent icon rendering */
   display: inline-block;
   width: 1.5em; /* Width for alignment */
@@ -186,27 +237,31 @@ button:disabled {
   margin-right: 5px;
   color: #61afef; /* Accent color for icons */
 }
-.file-tree li.folder::before {
+#snaggle-popup-container .file-tree li.folder::before {
   content: "📁";
-}
-.file-tree li.file::before {
+} /* Target folder icon */
+#snaggle-popup-container .file-tree li.file::before {
   content: "📄";
-}
+} /* Target file icon */
+
 /* Loading/Error Messages in Tree */
-.file-tree .loading-tree,
-.file-tree .error-message {
+#snaggle-popup-container .file-tree .loading-tree, /* Target loading message */
+#snaggle-popup-container .file-tree .error-message {
+  /* Target error message */
   padding: 15px;
   text-align: center;
   color: #888e99;
   font-style: italic;
 }
-.file-tree .error-message {
+#snaggle-popup-container .file-tree .error-message {
+  /* Target error message specific styles */
   color: #e06c75;
   font-style: normal;
   font-weight: 500;
 } /* Reddish error color */
 /* Prominent Download Button */
-#github-download-zip {
+#snaggle-popup-container #github-download-zip {
+  /* Target github download button */
   display: block;
   width: 100%;
   margin-top: 15px;
@@ -216,26 +271,28 @@ button:disabled {
   color: #282c34; /* Dark text on light button */
   font-weight: 600;
 }
-#github-download-zip:hover:not(:disabled) {
+#snaggle-popup-container #github-download-zip:hover:not(:disabled) {
   background-color: #7ac0ff;
   border-color: #7ac0ff;
   color: #282c34;
 }
-#github-download-zip:disabled {
+#snaggle-popup-container #github-download-zip:disabled {
   background-color: #3a3f4a;
   border-color: #4b5263;
   color: #888e99;
 }
 
 /* --- General Exporter Toggle Switch --- */
-.action-toggle {
+#snaggle-popup-container .action-toggle {
+  /* Target action-toggle div */
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 15px; /* Space below toggle */
 }
 
-.toggle-switch-label {
+#snaggle-popup-container .toggle-switch-label {
+  /* Target toggle label */
   display: inline-flex; /* Use flex to align items */
   align-items: center;
   cursor: pointer;
@@ -244,7 +301,8 @@ button:disabled {
 }
 
 /* Hide the actual checkbox visually but keep it accessible */
-.toggle-switch-label input[type="checkbox"] {
+#snaggle-popup-container .toggle-switch-label input[type="checkbox"] {
+  /* Target toggle checkbox */
   opacity: 0;
   width: 0;
   height: 0;
@@ -252,7 +310,8 @@ button:disabled {
 }
 
 /* The background of the switch */
-.toggle-slider {
+#snaggle-popup-container .toggle-slider {
+  /* Target toggle slider */
   position: relative;
   display: inline-block;
   width: 44px; /* Width of the switch background */
@@ -263,7 +322,8 @@ button:disabled {
 }
 
 /* The moving circle (knob) inside the switch */
-.toggle-slider::before {
+#snaggle-popup-container .toggle-slider::before {
+  /* Target toggle slider knob */
   content: "";
   position: absolute;
   width: 18px; /* Diameter of the circle */
@@ -276,20 +336,27 @@ button:disabled {
 }
 
 /* Style changes when the hidden checkbox is checked (Download state - ON) */
-.toggle-switch-label input[type="checkbox"]:checked + .toggle-slider {
+#snaggle-popup-container
+  .toggle-switch-label
+  input[type="checkbox"]:checked
+  + .toggle-slider {
   background-color: #61afef; /* Active color (represents 'Download' state) */
 }
 
 /* Move the circle to the right when checked */
-.toggle-switch-label input[type="checkbox"]:checked + .toggle-slider::before {
+#snaggle-popup-container
+  .toggle-switch-label
+  input[type="checkbox"]:checked
+  + .toggle-slider::before {
   transform: translateX(
     20px
   ); /* (Switch Width - Circle Width - 2 * Left Padding) = 44 - 18 - 2*3 = 20 */
 }
 
 /* Style the text labels next to the switch */
-.toggle-label-copy,
-.toggle-label-download {
+#snaggle-popup-container .toggle-label-copy, /* Target copy label */
+#snaggle-popup-container .toggle-label-download {
+  /* Target download label */
   font-size: 0.95em;
   font-weight: 500;
   transition: color 0.2s ease; /* Smooth color transition for labels */
@@ -297,38 +364,48 @@ button:disabled {
 }
 
 /* Highlight the active label based on the checkbox state */
-.toggle-switch-label input[type="checkbox"]:not(:checked) ~ .toggle-label-copy {
+#snaggle-popup-container
+  .toggle-switch-label
+  input[type="checkbox"]:not(:checked)
+  ~ .toggle-label-copy {
   color: #ffffff; /* Highlight 'Copy' when toggle is OFF */
 }
-.toggle-switch-label input[type="checkbox"]:checked ~ .toggle-label-download {
+#snaggle-popup-container
+  .toggle-switch-label
+  input[type="checkbox"]:checked
+  ~ .toggle-label-download {
   color: #ffffff; /* Highlight 'Download' when toggle is ON */
 }
 
 /* Description text below toggle */
-.action-description {
+#snaggle-popup-container .action-description {
+  /* Target action-description */
   text-align: center;
-  font-size: 0.85em;
+  font-size: 0.9em; /* Slightly larger */
   color: #888e99;
   margin-top: -10px; /* Pull it up slightly */
   margin-bottom: 15px;
 }
 
 /* --- General Error Section --- */
-#error-section {
+#snaggle-popup-container #error-section {
+  /* Target error section */
   padding: 15px;
   background-color: rgba(224, 108, 117, 0.1); /* Subtle red background */
   border: 1px solid #e06c75; /* Red border */
   border-radius: 5px;
   margin-top: 15px;
 }
-#error-section h2 {
+#snaggle-popup-container #error-section h2 {
+  /* Target error section h2 */
   border-bottom: none;
   margin-bottom: 8px;
   color: #e06c75;
   font-size: 1.1em;
   text-align: center;
 }
-#error-section p {
+#snaggle-popup-container #error-section p {
+  /* Target error section p */
   text-align: center;
   padding: 0;
   margin-bottom: 0;
@@ -338,31 +415,33 @@ button:disabled {
 } /* removed bottom margin */
 
 /* --- Unsupported Section --- */
-#unsupported-site {
+#snaggle-popup-container #unsupported-site {
+  /* Target unsupported section */
   padding: 25px 15px;
   text-align: center;
   font-style: italic;
   color: #888e99;
 }
-#unsupported-site h2 {
+#snaggle-popup-container #unsupported-site h2 {
+  /* Target unsupported section h2 */
   border-bottom: none;
   margin-bottom: 8px;
   color: #abb2bf;
 }
 
 /* --- Scrollbar Styling (Optional, for Webkit browsers like Chrome/Edge) --- */
-.container::-webkit-scrollbar {
+#snaggle-popup-container .container::-webkit-scrollbar {
   width: 8px;
 }
-.container::-webkit-scrollbar-track {
+#snaggle-popup-container .container::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }
-.container::-webkit-scrollbar-thumb {
+#snaggle-popup-container .container::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
-.container::-webkit-scrollbar-thumb:hover {
+#snaggle-popup-container .container::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Snaggle Exporter</title>
-    <!-- Ensure the path to your CSS file is correct -->
-    <link rel="stylesheet" href="popup.css" />
+    <!-- popup.css link will be handled by the content script -->
   </head>
   <body>
+    <!-- The content inside this body will be injected -->
     <div class="container">
       <header>
         <h1>Snaggle</h1>
@@ -80,7 +80,8 @@
 
         <!-- Description below toggle -->
         <p class="action-description">
-          Select action (Copy/Download) above, then choose format:
+          PDF is always Save As (via Print dialog). For Markdown and Text,
+          select action (Copy/Download) above, then choose format:
         </p>
 
         <!-- Action Buttons -->
@@ -96,10 +97,6 @@
     </div>
     <!-- /.container -->
 
-    <!-- External Libraries (ensure paths are correct) -->
-    <script src="/vendor/turndown.js"></script>
-    <!-- Turndown for Markdown conversion -->
-    <!-- Main Popup Script (ensure path is correct, type=module for imports) -->
-    <script type="module" src="/src/popup/index.ts"></script>
+    <!-- Script and CSS tags removed - handled by content script -->
   </body>
 </html>

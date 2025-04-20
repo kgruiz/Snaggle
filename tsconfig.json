@@ -2,19 +2,20 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"], // Ensure WebWorker for background
-    "outDir": "./dist",     // Output directly to dist (Vite handles subdirs)
-    "rootDir": "./src",     // Source root is src
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "sourceMap": true,      // Generate source maps
+    "sourceMap": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "types": ["chrome-types"], // Use official chrome types
-    "isolatedModules": true   // Often recommended/required by Vite/bundlers
+    "types": ["chrome-types"], // Keep chrome types
+    "isolatedModules": true
   },
-  "include": ["src/**/*"],   // Compile everything in src
+  // MODIFIED: Explicitly include the types directory alongside src
+  "include": ["src/**/*", "src/types/**/*.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
