@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite';
-import { crx, defineManifest } from '@crxjs/vite-plugin';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+// vite.config.ts
+import { defineConfig } from 'vite'
+import { crx, defineManifest } from '@crxjs/vite-plugin'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const manifest = defineManifest({
   manifest_version: 3,
@@ -13,7 +14,7 @@ const manifest = defineManifest({
   icons: {
     '16': 'icons/icon_16.png',
     '32': 'icons/icon_32.png',
-    '48': 'icons/icon_48.png', // Keep larger icons for OS/app switcher
+    '48': 'icons/icon_48.png',
     '128': 'icons/icon_128.png'
   },
   permissions: ['activeTab', 'scripting', 'downloads', 'clipboardWrite'],
@@ -23,22 +24,31 @@ const manifest = defineManifest({
     type: 'module'
   },
   action: {
-    // REMOVED default_popup - We will use a content script to inject UI
     default_icon: {
       '16': 'icons/icon_16.png',
       '32': 'icons/icon_32.png'
     }
   },
-  // ADDED content_scripts to inject our popup UI logic
   content_scripts: [
     {
-      matches: ["<all_urls>"], // Inject into all URLs. You could refine this later if needed.
-      js: ["src/popup/index.ts"], // Our popup UI logic will run as a content script
-      run_at: "document_idle", // Inject when the DOM is ready
-      // REMOVED world: "ISOLATED" - ISOLATED is the default in MV3 and removes the TS error
+      matches: ['<all_urls>'],
+      js: ['src/popup/index.ts'],
+      run_at: 'document_idle'
+    }
+  ],
+  web_accessible_resources: [
+    {
+      // globs include all needed runtime assets
+      resources: [
+        'popup.html',
+        'src/popup/*',
+        'vendor/jszip.min.js',
+        'vendor/turndown.js'
+      ],
+      matches: ['<all_urls>']
     }
   ]
-});
+})
 
 export default defineConfig(({ command }) => ({
   publicDir: 'public',
@@ -53,12 +63,7 @@ export default defineConfig(({ command }) => ({
     sourcemap: command === 'serve' ? 'inline' : false,
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        // We still list popup.html as an input so Vite processes it
-        // but it's no longer the default popup document
-        popup: resolve(__dirname, 'popup.html')
-        // Note: Vite automatically includes content scripts as entry points via CRXJS
-      }
+      input: { popup: resolve(__dirname, 'popup.html') }
     }
   }
-}));
+}))

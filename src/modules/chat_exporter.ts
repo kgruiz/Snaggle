@@ -31,7 +31,16 @@ export function isChatSite(url: string): boolean {
 export function extractChatData(format: 'txt' | 'md' | 'json'): ChatExtractionResult {
   // --- Site-Specific Selectors --- KEEP YOUR SELECTORS HERE
   const selectors: { [key: string]: any } = {
-      "chat.openai.com": { container: 'main', messageTurn: 'div[data-testid^="conversation-turn-"]', messageContent: '.markdown', roleSelector: 'div[data-message-author-role]', roleAttribute: 'data-message-author-role', timestampSelector: 'time[datetime]', timestampAttribute: 'datetime' },
+      // ChatGPT (chat.openai.com) support: extract each message group and its content
+      "chat.openai.com": {
+          // Main chat container
+          container: 'main',
+          // Each message turn is a group div (user or assistant)
+          messageTurn: 'div.group',
+          // The message content is within a prose-styled div
+          messageContent: 'div.prose',
+          // Role and timestamp not currently encoded; roles default to "unknown"
+      },
       "gemini.google.com": { container: 'main', messageTurn: '.message', messageContent: '.content .text', roleIndicator: '.participant .name' },
       "aistudio.google.com": { container: 'div.chat-container', messageTurn: 'div.message-row', messageContent: 'div.message-text', roleIndicator: 'div.sender-role' },
   };
