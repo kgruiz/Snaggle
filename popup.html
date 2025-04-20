@@ -1,73 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Snaggle</title>
-    <!-- Vite will inject the processed CSS link here -->
+    <title>Snaggle Exporter</title>
+    <!-- Ensure the path to your CSS file is correct -->
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <div class="container">
       <header>
         <h1>Snaggle</h1>
       </header>
-      <main id="content">
-        <!-- Loading/Error/Feature Sections remain exactly the same HTML structure -->
-        <div id="loading" hidden>Detecting site...</div>
-        <div id="chat-exporter" class="feature-section" hidden>
-          <h2>Chat Exporter</h2>
-          <p>Download current chat thread:</p>
-          <div class="button-group">
-            <button id="chat-txt" title="Download as Plain Text">.txt</button>
-            <button id="chat-md" title="Download as Markdown">.md</button>
-            <button id="chat-json" title="Download as JSON">.json</button>
-          </div>
+
+      <!-- Loading Indicator -->
+      <div id="loading">Loading...</div>
+
+      <!-- Error Section -->
+      <section id="error-section" hidden>
+        <h2>Error</h2>
+        <p id="error-message">An error occurred.</p>
+      </section>
+
+      <!-- Unsupported Site Section -->
+      <section id="unsupported-site" hidden>
+        <h2>Unsupported Site</h2>
+        <p>
+          This extension does not currently support exporting from this type of
+          page.
+        </p>
+      </section>
+
+      <!-- Chat Exporter Section -->
+      <section id="chat-exporter" class="feature-section" hidden>
+        <h2>Chat Exporter</h2>
+        <p>Download this chat conversation.</p>
+        <div class="button-group">
+          <button id="chat-txt">TXT</button>
+          <button id="chat-md">Markdown</button>
+          <button id="chat-json">JSON</button>
         </div>
-        <div id="github-downloader" class="feature-section" hidden>
-          <h2>GitHub Downloader</h2>
-          <p>Select files/folders from current directory:</p>
-          <div id="github-file-tree" class="file-tree">
-            <div class="loading-tree">Loading file tree...</div>
-          </div>
-          <p style="margin-top: 10px; margin-bottom: 5px">
-            <label>
-              <input type="checkbox" id="github-select-all" /> Select All
-              Visible
-            </label>
-          </p>
-          <button id="github-download-zip" class="download-button" disabled>
-            Download Selected (.zip)
-          </button>
+      </section>
+
+      <!-- GitHub Downloader Section -->
+      <section id="github-downloader" class="feature-section" hidden>
+        <h2>GitHub Downloader</h2>
+        <p>Select files/folders to download as a ZIP.</p>
+        <div class="github-controls">
+          <label class="select-all-label">
+            <input type="checkbox" id="github-select-all" /> Select All
+          </label>
         </div>
-        <div id="general-exporter" class="feature-section" hidden>
-          <h2>General Page Exporter</h2>
-          <p>Download current page content:</p>
-          <div class="button-group">
-            <button id="general-pdf" title="Save as PDF (uses Print Dialog)">PDF</button>
-            <!-- Download buttons -->
-            <button id="general-md" title="Download as Markdown">.md</button>
-            <button id="general-txt" title="Download as Plain Text">.txt</button>
-            <!-- Copy to clipboard buttons -->
-            <button id="general-copy-md" title="Copy as Markdown">Copy .md</button>
-            <button id="general-copy-txt" title="Copy as Plain Text">Copy .txt</button>
-          </div>
+        <div id="github-file-tree" class="file-tree">
+          <!-- File tree will be populated here -->
+          <div class="loading-tree">Loading file tree...</div>
+          <!-- Initial state -->
         </div>
-        <div id="unsupported-site" class="feature-section" hidden>
-          <h2>Unsupported</h2>
-          <p>
-            Snaggle feature not available for this specific page or protocol.
-          </p>
+        <button id="github-download-zip" class="download-button" disabled>
+          Download Selected (.zip)
+        </button>
+      </section>
+
+      <!-- General Exporter Section -->
+      <section id="general-exporter" class="feature-section" hidden>
+        <h2>General Page Exporter</h2>
+
+        <!-- Action Toggle Switch -->
+        <div class="action-toggle">
+          <label for="action-toggle-switch" class="toggle-switch-label">
+            <span class="toggle-label-copy">Copy</span>
+            <!-- Label for OFF state -->
+            <input type="checkbox" id="action-toggle-switch" />
+            <!-- Checkbox controls state. Default: unchecked (Copy) -->
+            <span class="toggle-slider"></span>
+            <!-- Visual slider part -->
+            <span class="toggle-label-download">Download</span>
+            <!-- Label for ON state -->
+          </label>
         </div>
-        <div id="error-section" class="feature-section" hidden>
-          <h2>Error</h2>
-          <p id="error-message"></p>
-          <button onclick="window.close()">Close</button>
+
+        <!-- Description below toggle -->
+        <p class="action-description">
+          Select action (Copy/Download) above, then choose format:
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+          <button id="general-pdf">Save as PDF...</button>
+          <!-- PDF is always Save As via Print -->
+          <button id="general-md">Markdown</button>
+          <!-- Action (Copy/Download) depends on toggle -->
+          <button id="general-txt">Text</button>
+          <!-- Action (Copy/Download) depends on toggle -->
         </div>
-      </main>
+      </section>
     </div>
-    <!-- Load vendor script from public directory (copied by Vite) -->
+    <!-- /.container -->
+
+    <!-- External Libraries (ensure paths are correct) -->
     <script src="/vendor/turndown.js"></script>
-    <!-- Vite injects the main popup script -->
+    <!-- Turndown for Markdown conversion -->
+    <!-- Main Popup Script (ensure path is correct, type=module for imports) -->
     <script type="module" src="/src/popup/index.ts"></script>
   </body>
 </html>
