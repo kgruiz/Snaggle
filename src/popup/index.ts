@@ -140,8 +140,12 @@ function setupGitHubListeners(tab: chrome.tabs.Tab, url: string): void {
 
 function setupGeneralListeners(tab: chrome.tabs.Tab): void {
   document.getElementById('general-pdf')?.addEventListener('click', () => handleGeneralExport(tab,'pdf'));
+  // Download buttons
   document.getElementById('general-md') ?.addEventListener('click', () => handleGeneralExport(tab,'md'));
   document.getElementById('general-txt')?.addEventListener('click', () => handleGeneralExport(tab,'txt'));
+  // Copy to clipboard buttons
+  document.getElementById('general-copy-md')?.addEventListener('click', () => handleGeneralCopy(tab,'md'));
+  document.getElementById('general-copy-txt')?.addEventListener('click', () => handleGeneralCopy(tab,'txt'));
 }
 /* ------------------------------------ */
 
@@ -201,6 +205,37 @@ async function handleGeneralExport(tab: chrome.tabs.Tab, format: 'pdf'|'txt'|'md
     if (loadingDiv) loadingDiv.hidden = true;
   }
 }
+/* --------------------------------------- */
+/**
+ * Copy current page content to clipboard in specified format (md or txt).
+ */
+async function handleGeneralCopy(tab: chrome.tabs.Tab, format: 'txt'|'md'): Promise<void> {
+  showLoading(`Copying page as ${format.toUpperCase()}…`);
+  if (!tab.id) return showError('Tab ID missing.');
+  try {
+    const results = await api.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: extractDataForInjection,
+      args: []
+    });
+    const extracted = results?.[0]?.result as PageResult | undefined;
+    if (!extracted || extracted.error) throw new Error(extracted?.error ?? 'No data');
+    let content = extracted.content;
+    if (extracted.requiresMarkdownConversion) {
+      content =
+        typeof TurndownService !== 'undefined'
+          ? GeneralExporter.convertHtmlToMarkdown(content)
+          : '<!-- Turndown library missing -->\n\n' + content;
+    }
+    // Copy text to clipboard
+    await navigator.clipboard.writeText(content);
+    if (loadingDiv) loadingDiv.textContent = 'Copied to clipboard!';
+    setTimeout(() => window.close(), 1500);
+  } catch (err: any) {
+    showError(`Copy failed: ${err?.message ?? 'unknown'}`);
+  }
+}
+/* --------------------------------------- */
 /* --------------------------------------- */
 
 console.log('Snaggle Popup Script Loaded.');
