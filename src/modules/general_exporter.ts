@@ -11,7 +11,7 @@ interface PageExtractionResult {
 // convertHtmlToMarkdown function removed - it's now in src/utils/markdown_converter.ts
 
 // Function executed IN THE CONTEXT OF THE WEBPAGE via scripting.executeScript
-export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
+export function extractPageData(format: 'txt' | 'md' | 'pdf'): PageExtractionResult {
     console.log(`Snaggle Content Script: extractPageData called with format: ${format}`);
     try {
         let content: string = "";
@@ -31,7 +31,7 @@ export function extractPageData(format: 'txt' | 'md'): PageExtractionResult {
                  console.warn("Snaggle Content Script: TXT extraction resulted in empty content.");
              }
              requiresMarkdownConversion = false; // TXT format never needs conversion
-        } else if (format === 'md') {
+        } else if (format === 'md' || format === 'pdf') {
              console.log("Snaggle Content Script: Extracting as MD, searching for main content node...");
             // Attempt to find the most relevant content area
             const contentNodeSource: Element | null =

@@ -10,6 +10,11 @@ import TurndownService from 'turndown';
  * @returns Markdown string or an error message with raw HTML on failure.
  */
 export function convertHtmlToMarkdown(htmlContent: string): string {
+    // Skip conversion if no DOM is available (e.g., background service worker)
+    if (typeof document === 'undefined') {
+        console.warn("Snaggle Background: document is not available, skipping Markdown conversion.");
+        return htmlContent;
+    }
     if (typeof TurndownService === 'undefined') {
         console.error("Snaggle Background: Turndown library is not loaded for Markdown conversion.");
         // Return original HTML wrapped in a code block as a fallback

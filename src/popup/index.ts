@@ -12,6 +12,8 @@ import {
     getSelectedItems, // Gets selected items based on popup DOM
     areAllSelected    // Checks selection state based on popup DOM
 } from '../modules/github_downloader.js';
+// Import html2pdf for PDF generation in popup
+import html2pdf from 'html2pdf.js';
 
 const api = chrome;
 

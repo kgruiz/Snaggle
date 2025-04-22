@@ -21,8 +21,8 @@
         "vite"
     ],
     "author": "Kaden Gruizenga",
-    "dependencies": 
-    {
+    "dependencies": {
+        "html2pdf.js": "^0.10.1",
         "jszip": "^3.10.1",
         "turndown": "^7.2.0"
     },

@@ -96,17 +96,6 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
                     functionToInject = extractChatData;
                 } else if (message.extractionType === 'general') {
                     functionToInject = extractPageData;
-                    // For PDF, invoke print dialog in page context
-                    if (format === 'pdf') {
-                        console.log("Snaggle BG: Requesting print dialog...");
-                        try {
-                            await api.scripting.executeScript({ target: { tabId: tabId }, func: () => window.print() });
-                        } catch (e: any) {
-                            throw new Error(`Print request failed: ${e.message}`);
-                        }
-                        sendResponse({ success: true });
-                        return;
-                    }
                 } else {
                     throw new Error(`Unsupported extraction type: ${message.extractionType}`);
                 }
@@ -118,7 +107,8 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
                     results = await api.scripting.executeScript({
                         target: { tabId: tabId },
                         func: functionToInject,
-                        args: [format],
+                        // For PDF, extract HTML (as 'md') instead of invoking print dialog
+                        args: [format === 'pdf' ? 'md' : format],
                         world: 'ISOLATED'
                     });
                 } catch (e: any) {
