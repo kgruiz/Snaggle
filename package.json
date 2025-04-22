@@ -4,15 +4,13 @@
     "description": "Download content from specific websites via the extension popup.",
     "private": true,
     "type": "module",
-    "scripts": 
-    {
+    "scripts": {
         "dev": "vite",
-        "copy-vendor": "mkdir -p public/vendor && cp node_modules/jszip/dist/jszip.min.js public/vendor/ && cp node_modules/turndown/dist/turndown.js public/vendor/",
+        "copy-vendor": "mkdir -p public/vendor && cp node_modules/jszip/dist/jszip.min.js public/vendor/ && cp node_modules/turndown/dist/turndown.js public/vendor/ && cp node_modules/html2pdf.js/dist/html2pdf.bundle.min.js public/vendor/html2pdf.min.js",
         "build": "npm run copy-vendor && vite build",
         "preview": "vite preview"
     },
-    "keywords": 
-    [
+    "keywords": [
         "chrome",
         "extension",
         "downloader",
@@ -22,12 +20,12 @@
     ],
     "author": "Kaden Gruizenga",
     "dependencies": {
+        "html2pdf": "^0.0.11",
         "html2pdf.js": "^0.10.1",
         "jszip": "^3.10.1",
         "turndown": "^7.2.0"
     },
-    "devDependencies": 
-    {
+    "devDependencies": {
         "@crxjs/vite-plugin": "^2.0.0-beta.32",
         "@types/node": "^22.14.1",
         "chrome-types": "^0.1.347",

@@ -12,8 +12,7 @@ import {
     getSelectedItems, // Gets selected items based on popup DOM
     areAllSelected    // Checks selection state based on popup DOM
 } from '../modules/github_downloader.js';
-// Import html2pdf for PDF generation in popup
-import html2pdf from 'html2pdf.js';
+// html2pdf is loaded globally via script tag in popup.html
 
 const api = chrome;
 
@@ -425,13 +424,35 @@ async function requestExtraction(type: 'chat' | 'general', format: 'txt' | 'md' 
             format: format
         });
 
-        // Handle PDF response (no data expected, just success signal)
+        // Handle PDF response: generate and download PDF using html2pdf
         if (type === 'general' && format === 'pdf') {
-             if (!response?.success) throw new Error(response?.error || "Failed to request print dialog.");
-             console.log("Snaggle Popup: Print dialog should have opened.");
-             // Close popup or provide feedback
-             // setTimeout(() => window.close(), 500); // Optional close
-             return; // Exit early for PDF
+            if (!response?.success) throw new Error(response?.error || "Failed to extract PDF content.");
+            const data = response.extractedData;
+            if (!data || typeof data.content !== 'string') {
+                throw new Error("Background did not return valid PDF content.");
+            }
+            // Determine filename
+            const filename = data.filename || `${type}-export-${Date.now()}.pdf`;
+            const sanitizedFilename = sanitizeFilename(filename);
+            // Create offscreen container for HTML content
+            const container = document.createElement('div');
+            container.style.position = 'absolute';
+            container.style.top = '0';
+            container.style.left = '-9999px';
+            container.innerHTML = data.content;
+            document.body.appendChild(container);
+            try {
+                console.log(`Snaggle Popup: Generating PDF for "${sanitizedFilename}"`);
+                // Generate and save PDF
+                await html2pdf(container, { filename: sanitizedFilename });
+            } catch (err: any) {
+                throw new Error(`PDF generation failed: ${err?.message || err}`);
+            } finally {
+                document.body.removeChild(container);
+            }
+            // Restore UI
+            showSection('general-exporter');
+            return; // PDF generation complete
         }
 
         // Handle regular extractions (TXT, MD, JSON)

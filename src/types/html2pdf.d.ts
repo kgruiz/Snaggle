@@ -9,3 +9,9 @@ declare module 'html2pdf.js' {
   const html2pdf: any;
   export default html2pdf;
 }
+// Global html2pdf loaded via script tag
+declare global {
+  var html2pdf: any;
+}
+
+export {};
