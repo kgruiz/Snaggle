@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Snaggle Exporter</title>
-    <!-- popup.css link will be handled by the content script -->
+    <link rel="stylesheet" href="/src/popup/popup.css" />
   </head>
   <body>
-    <!-- The content inside this body will be injected -->
+    <!-- Popup UI structure -->
     <div class="container">
       <header>
         <h1>Snaggle</h1>
@@ -35,9 +35,9 @@
         <h2>Chat Exporter</h2>
         <p>Download this chat conversation.</p>
         <div class="button-group">
-          <button id="chat-txt">TXT</button>
-          <button id="chat-md">Markdown</button>
-          <button id="chat-json">JSON</button>
+          <button id="chat-txt" disabled>TXT</button>
+          <button id="chat-md" disabled>Markdown</button>
+          <button id="chat-json" disabled>JSON</button>
         </div>
       </section>
 
@@ -47,13 +47,11 @@
         <p>Select files/folders to download as a ZIP.</p>
         <div class="github-controls">
           <label class="select-all-label">
-            <input type="checkbox" id="github-select-all" /> Select All
+            <input type="checkbox" id="github-select-all" disabled /> Select All
           </label>
         </div>
         <div id="github-file-tree" class="file-tree">
-          <!-- File tree will be populated here -->
           <div class="loading-tree">Loading file tree...</div>
-          <!-- Initial state -->
         </div>
         <button id="github-download-zip" class="download-button" disabled>
           Download Selected (.zip)
@@ -63,40 +61,24 @@
       <!-- General Exporter Section -->
       <section id="general-exporter" class="feature-section" hidden>
         <h2>General Page Exporter</h2>
-
-        <!-- Action Toggle Switch -->
-        <div class="action-toggle">
-          <label for="action-toggle-switch" class="toggle-switch-label">
-            <span class="toggle-label-copy">Copy</span>
-            <!-- Label for OFF state -->
-            <input type="checkbox" id="action-toggle-switch" />
-            <!-- Checkbox controls state. Default: unchecked (Copy) -->
-            <span class="toggle-slider"></span>
-            <!-- Visual slider part -->
-            <span class="toggle-label-download">Download</span>
-            <!-- Label for ON state -->
-          </label>
-        </div>
-
-        <!-- Description below toggle -->
+        <!-- Removed Toggle Switch for simplicity -->
         <p class="action-description">
-          PDF is always Save As (via Print dialog). For Markdown and Text,
-          select action (Copy/Download) above, then choose format:
+          Choose format to download. PDF uses Print dialog.
         </p>
-
-        <!-- Action Buttons -->
         <div class="button-group">
-          <button id="general-pdf">Save as PDF...</button>
-          <!-- PDF is always Save As via Print -->
-          <button id="general-md">Markdown</button>
-          <!-- Action (Copy/Download) depends on toggle -->
-          <button id="general-txt">Text</button>
-          <!-- Action (Copy/Download) depends on toggle -->
+          <button id="general-pdf" disabled>Save as PDF...</button>
+          <button id="general-md" disabled>Download Markdown</button>
+          <button id="general-txt" disabled>Download Text</button>
         </div>
       </section>
     </div>
     <!-- /.container -->
 
-    <!-- Script and CSS tags removed - handled by content script -->
+    <!-- Load JSZip globally if background needs it (or load dynamically there) -->
+    <script src="/vendor/jszip.min.js"></script>
+    <!-- Load Turndown globally if background needs it for conversion (or load dynamically there) -->
+    <script src="/vendor/turndown.js"></script>
+    <!-- Load the main popup logic script -->
+    <script type="module" src="/src/popup/index.ts"></script>
   </body>
 </html>

@@ -4,18 +4,29 @@
     "module": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./src", // Keep rootDir pointing to src
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": true, // Enable source maps for easier debugging
     "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "types": ["chrome-types"], // Keep chrome types
-    "isolatedModules": true
+    "moduleResolution": "node", // Or "bundler" if using Vite 5+ features heavily
+    "types": ["chrome-types"],
+    "isolatedModules": true,
+    "baseUrl": ".", // Optional: Helps with path resolution if needed
+    "paths": { // Optional: Define paths if needed for cleaner imports
+        "@utils/*": ["src/utils/*"],
+        "@modules/*": ["src/modules/*"],
+        "@content/*": ["src/content/*"],
+        "@background/*": ["src/background/*"],
+        "@popup/*": ["src/popup/*"]
+    }
   },
-  // MODIFIED: Explicitly include the types directory alongside src
-  "include": ["src/**/*", "src/types/**/*.d.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts", // Include all .ts files in src
+    "src/types/**/*.d.ts" // Explicitly include type definitions
+    // Vite handles .css, .json etc., no need to include them here for TS
+    ],
+  "exclude": ["node_modules", "dist", "concat-out"] // Exclude build output and temp files
 }
