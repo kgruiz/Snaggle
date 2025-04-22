@@ -47,16 +47,34 @@ interface BackgroundResponse {
 }
 // --- End Type Definitions ---
 
-// JSZip and TurndownService are available via static imports; dynamic loading removed
 
-async function loadJSZip(): Promise<void> {
-    // No-op; JSZip is available via static import
-    return;
-}
+// --- Helper Functions ---
 
-async function loadTurndown(): Promise<void> {
-    // No-op; TurndownService is available via static import
-    return;
+/**
+ * Converts a Blob object into a Data URL string.
+ * Required because URL.createObjectURL is not available in Service Workers.
+ * @param blob The Blob to convert.
+ * @returns A Promise resolving with the Data URL string.
+ */
+function blobToDataURL(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            // Ensure result is a string before resolving
+            if (typeof reader.result === 'string') {
+                resolve(reader.result);
+            } else {
+                reject(new Error('FileReader did not return a string.'));
+            }
+        };
+        reader.onerror = () => {
+            reject(reader.error || new Error('FileReader error during blob conversion.'));
+        };
+        reader.onabort = () => {
+            reject(new Error('FileReader aborted during blob conversion.'));
+        };
+        reader.readAsDataURL(blob); // Read blob as Data URL
+    });
 }
 
 
@@ -101,7 +119,6 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
                 }
 
                 console.log(`Snaggle BG: Executing script for ${message.extractionType} (${format}) in tab ${tabId}`);
-                // *** FIX: Remove generic parameter from InjectionResult type ***
                 let results: chrome.scripting.InjectionResult[];
                 try {
                     results = await api.scripting.executeScript({
@@ -140,7 +157,10 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
 
                 if ((format === 'md') && extractedData?.requiresMarkdownConversion && extractedData?.content) {
                     console.log("Snaggle BG: Performing Markdown conversion...");
-                    await loadTurndown();
+                    // Turndown is loaded statically via import
+                    if (typeof (self as any).TurndownService === 'undefined') {
+                        throw new Error("TurndownService library not loaded for conversion.");
+                    }
                     extractedData.content = convertHtmlToMarkdown(extractedData.content);
                     extractedData.requiresMarkdownConversion = false;
                 }
@@ -165,7 +185,6 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
 
             // --- Fetch GitHub Data ---
             else if (action === 'fetchGitHubData') {
-                // ... (GitHub fetch logic remains the same)
                 if (!message.repoInfo) {
                     throw new Error("Missing repoInfo for GitHub fetch.");
                 }
@@ -222,7 +241,6 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
 
             // --- Download File Request ---
             else if (action === "downloadFile") {
-                // ... (Download file logic remains the same, using try/catch)
                 if (!message.url || !message.filename) {
                     throw new Error("Missing URL or filename for downloadFile.");
                 }
@@ -253,38 +271,46 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
 
             // --- Create and Download ZIP Request ---
             else if (action === "createAndDownloadZip") {
-                // ... (ZIP logic remains the same, using try/catch)
-                await loadJSZip();
-                if (typeof JSZip === 'undefined') {
+                // JSZip is loaded statically via import
+                if (typeof (self as any).JSZip === 'undefined') {
                     throw new Error("JSZip library not loaded for ZIP creation.");
                 }
                 if (!message.filesToFetch || !message.repoInfo) {
                     throw new Error("Missing filesToFetch or repoInfo for ZIP.");
                 }
+
                 console.log("Snaggle BG: Starting ZIP creation process...");
                 const blob = await createZip(message.filesToFetch, message.repoInfo, message.filename || 'github-download.zip');
-
                 console.log("Snaggle BG: ZIP Blob created, size:", blob.size);
-                const blobUrl = URL.createObjectURL(blob);
+
+                // *** Replace createObjectURL with blobToDataURL ***
+                console.log("Snaggle BG: Converting ZIP blob to Data URL...");
+                let dataUrl: string;
+                try {
+                    // Use the new helper function
+                    dataUrl = await blobToDataURL(blob);
+                    console.log("Snaggle BG: Data URL created (length):", dataUrl.length); // Log length, not the URL itself
+                } catch (e: any) {
+                    throw new Error(`Failed to convert blob to Data URL: ${e.message}`);
+                }
+
                 let downloadId : number | undefined;
                 try {
                     const downloadOptions: chrome.downloads.DownloadOptions = {
-                        url: blobUrl,
+                        url: dataUrl, // *** Use the Data URL ***
                         filename: message.filename || 'github-download.zip',
-                        saveAs: true
+                        saveAs: true // Keep saveAs or make configurable
                     };
-                    try {
-                         downloadId = await api.downloads.download(downloadOptions);
-                    } catch (e: any) {
-                         URL.revokeObjectURL(blobUrl);
-                         throw new Error(`ZIP Download initiation failed: ${e.message}`);
-                    }
-                } finally {
-                    setTimeout(() => {
-                        console.log("Snaggle BG: Revoking ZIP blob URL:", blobUrl);
-                        URL.revokeObjectURL(blobUrl);
-                    }, 15000);
+                    downloadId = await api.downloads.download(downloadOptions);
+
+                    // *** REMOVE revokeObjectURL logic ***
+                    // No need to revoke Data URLs. The browser handles their lifecycle.
+
+                } catch (e: any) {
+                    // If download fails, no URL needed revoking anyway
+                    throw new Error(`ZIP Download initiation failed: ${e.message}`);
                 }
+                // *** REMOVE the finally block with revokeObjectURL ***
 
                 if (downloadId === undefined || downloadId === 0) {
                     throw new Error("ZIP Download initiation failed (invalid ID returned or zero).");
@@ -304,13 +330,11 @@ api.runtime.onMessage.addListener((message: BackgroundMessage, sender: chrome.ru
         }
     })();
 
-    return true;
+    return true; // Indicate async response
 });
 
 
-// --- Helper Functions ---
 async function getCurrentTab(): Promise<chrome.tabs.Tab> {
-    // ... (getCurrentTab implementation remains the same, using try/catch)
     let tabs: chrome.tabs.Tab[];
     try {
         tabs = await api.tabs.query({ active: true, currentWindow: true });
@@ -347,13 +371,12 @@ async function getCurrentTab(): Promise<chrome.tabs.Tab> {
 
 const GITHUB_API_BASE: string = "https://api.github.com/repos/";
 
-// createZip function remains the same
+// createZip function remains the same - it uses JSZip which is globally available
 async function createZip(filesToFetch: GitHubFileItem[], repoInfo: RepoInfo, filename: string): Promise<Blob> {
-     // ... (createZip implementation remains the same)
-     if (typeof JSZip === 'undefined') { throw new Error("JSZip is not available for ZIP creation."); }
-     const zip = new JSZip();
+     if (typeof (self as any).JSZip === 'undefined') { throw new Error("JSZip is not available for ZIP creation."); }
+     const zip = new (self as any).JSZip(); // Use the global JSZip
      const { owner, repo, ref } = repoInfo;
-     console.log(`Snaggle BG: Adding ${filesToFetch.length} items to ZIP for ${owner}/${repo}#${ref}`);
+     console.log(`Snaggle BG Zip: Adding ${filesToFetch.length} items to ZIP for ${owner}/${repo}#${ref}`);
 
      const results = await Promise.allSettled(filesToFetch.map(async (item) => {
          const itemPath = item.path || '';

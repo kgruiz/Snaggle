@@ -1,0 +1,59 @@
+.
+├── dist
+│   ├── assets
+│   │   ├── index.ts-DjpzudKi.js
+│   │   ├── popup-CsZH0lc8.css
+│   │   └── popup-D8r9z6Op.js
+│   ├── icons
+│   │   ├── icon_128.png
+│   │   ├── icon_16.png
+│   │   ├── icon_32.png
+│   │   └── icon_48.png
+│   ├── manifest.json
+│   ├── popup.html
+│   ├── service-worker-loader.js
+│   └── vendor
+│       ├── html2pdf.min.js
+│       ├── jszip.min.js
+│       └── turndown.js
+├── docs
+│   ├── concat-selected.zsh
+│   ├── icon.png
+│   └── README.md
+├── package-lock.json
+├── package.json
+├── popup.html
+├── public
+│   ├── icons
+│   │   ├── icon_128.png
+│   │   ├── icon_16.png
+│   │   ├── icon_32.png
+│   │   └── icon_48.png
+│   └── vendor
+│       ├── html2pdf.min.js
+│       ├── jszip.min.js
+│       └── turndown.js
+├── src
+│   ├── background
+│   │   └── index.ts
+│   ├── content
+│   │   └── extractGeneralData.ts
+│   ├── modules
+│   │   ├── chat_exporter.ts
+│   │   ├── general_exporter.ts
+│   │   └── github_downloader.ts
+│   ├── popup
+│   │   ├── index.ts
+│   │   └── popup.css
+│   ├── types
+│   │   ├── html2pdf.d.ts
+│   │   ├── turndown.d.ts
+│   │   └── vite-env.d.ts
+│   └── utils
+│       ├── markdown_converter.ts
+│       └── site_checkers.ts
+├── tree.txt
+├── tsconfig.json
+└── vite.config.ts
+
+16 directories, 41 files
