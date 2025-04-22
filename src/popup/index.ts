@@ -12,6 +12,8 @@ import {
     getSelectedItems, // Gets selected items based on popup DOM
     areAllSelected    // Checks selection state based on popup DOM
 } from '../modules/github_downloader.js';
+// Global html2pdf loaded via script tag in popup.html
+declare const html2pdf: any;
 // html2pdf is loaded globally via script tag in popup.html
 
 const api = chrome;
@@ -443,8 +445,14 @@ async function requestExtraction(type: 'chat' | 'general', format: 'txt' | 'md' 
             document.body.appendChild(container);
             try {
                 console.log(`Snaggle Popup: Generating PDF for "${sanitizedFilename}"`);
-                // Generate and save PDF
-                await html2pdf(container, { filename: sanitizedFilename });
+                // Generate PDF blob via html2pdf, then download via chrome.downloads
+                const instance = html2pdf()
+                    .from(container)
+                    .set({ margin: 0, html2canvas: { scale: 2 } })
+                    .toPdf();
+                const pdf = instance.get('pdf');
+                const blob = pdf.output('blob');
+                await requestDownload(blob, sanitizedFilename);
             } catch (err: any) {
                 throw new Error(`PDF generation failed: ${err?.message || err}`);
             } finally {
