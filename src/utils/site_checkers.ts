@@ -3,7 +3,7 @@
 /** Checks if the URL is a known chat site. Safe for background script. */
 export function isChatSite(url: string): boolean {
     const chatDomains: string[] = [
-      "chat.openai.com",
+      "chatgpt.com",
       "gemini.google.com",
       "aistudio.google.com"
       // Add other chat domains here if needed
